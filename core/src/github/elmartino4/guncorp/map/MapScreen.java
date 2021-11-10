@@ -25,43 +25,44 @@ public class MapScreen extends ScreenAdapter {
     public final MapData mapData = new MapData(69420);
     public Consumer<MenuData> menuDataConsumer;
 
-    public MapScreen(Consumer<MenuData> consumer){
+    public MapScreen(Consumer<MenuData> consumer) {
         menuDataConsumer = consumer;
-        MENUS = new Menu[]{
-                new EscapeMenu(consumer)
-        };
+        MENUS = new Menu[] { new EscapeMenu(consumer) };
     }
 
     @Override
     public void create() {
-        for (Menu menu : MENUS){
+        for (Menu menu : MENUS) {
             menu.create();
         }
     }
 
     @Override
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
-        if(currentMenu == -1){
-            if(Gdx.input.getX() < EDGE || Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+        if (currentMenu == -1) {
+            if (Gdx.input.getX() < EDGE || Gdx.input.isKeyPressed(Input.Keys.LEFT)
+                    || Gdx.input.isKeyPressed(Input.Keys.A)) {
                 velocity[0] -= Gdx.graphics.getDeltaTime() * ACCELERATION;
-            }else if(Gdx.input.getX() > Gdx.graphics.getWidth() - EDGE || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            } else if (Gdx.input.getX() > Gdx.graphics.getWidth() - EDGE || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+                    || Gdx.input.isKeyPressed(Input.Keys.D)) {
                 velocity[0] += Gdx.graphics.getDeltaTime() * ACCELERATION;
-            }else{
+            } else {
                 velocity[0] = 0;
             }
 
-            if(Gdx.input.getY() < EDGE || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            if (Gdx.input.getY() < EDGE || Gdx.input.isKeyPressed(Input.Keys.DOWN)
+                    || Gdx.input.isKeyPressed(Input.Keys.S)) {
                 velocity[1] -= Gdx.graphics.getDeltaTime() * ACCELERATION;
-            }else if(Gdx.input.getY() > Gdx.graphics.getHeight() - EDGE || Gdx.input.isKeyPressed(Input.Keys.UP)){
+            } else if (Gdx.input.getY() > Gdx.graphics.getHeight() - EDGE || Gdx.input.isKeyPressed(Input.Keys.UP)
+                    || Gdx.input.isKeyPressed(Input.Keys.W)) {
                 velocity[1] += Gdx.graphics.getDeltaTime() * ACCELERATION;
-            }else{
+            } else {
                 velocity[1] = 0;
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
             currentMenu = (currentMenu != -1) ? -1 : 0;
-
 
         pos[0] += velocity[0];
         pos[1] += velocity[1];
@@ -77,7 +78,7 @@ public class MapScreen extends ScreenAdapter {
 
         shapeRenderer.end();
 
-        if(currentMenu != -1){
+        if (currentMenu != -1) {
             MENUS[currentMenu].render(batch, shapeRenderer);
         }
     }
@@ -85,7 +86,7 @@ public class MapScreen extends ScreenAdapter {
     @Override
     public String getDebugText() {
         String out = Gdx.input.isTouched() + "\nPos: " + Arrays.toString(pos);
-        if(currentMenu != -1){
+        if (currentMenu != -1) {
             out += "\n" + MENUS[currentMenu].getDebugText();
         }
 
