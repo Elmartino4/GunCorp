@@ -31,6 +31,38 @@ when its greater than 95% it is called `purified {element name}`
 when greater than 98% its called `heavily purified {element name}`.
 heavily purified minerals also have a grade, these are `D` for >98%, `C` for >99%, `B` for >99.6%, `A` for >99.9%, `S` for 100% (measure to 2 digits accuracy)
 
-
-
 otherwise, mineral names are randomly generated using a dictionary like elements.
+
+## Elements
+Each element has various associated statistics which determine their value in the physics sim environment
+
+### Reaction types
+ - Cold reaction
+   - absorbs heat
+   - 2 molecules combine and decrease in heat
+ - Hot reaction
+   - releases a little heat
+   - 2 molecules of very different M, and N values combine and split again to create 2 molecules of more similar values
+ - Decay reaction
+   - releases lots of heat
+   - one large molecule splits into 2 smaller ones
+
+### Stats
+ - N value
+ - M value
+ - Cold reaction threshold (relates to pressure)
+ - Cold reaction preference
+ - Hot reaction threshold (relates to temperature)
+ - Hot reaction preference
+ - Boiling point (as temperature * pressure)
+ - Melting point (as temperature * pressure)
+ - Decay rate (as probability per second)
+ - Preferred Density
+
+Temperature is in Kelvins
+
+Pressure (Outward force 0<x<∞) = True Density / Preferred Density
+
+### Physics Data
+ - Temperature
+ - Density
