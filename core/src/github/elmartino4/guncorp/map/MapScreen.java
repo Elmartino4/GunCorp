@@ -13,7 +13,7 @@ import github.elmartino4.guncorp.menus.MenuData;
 import java.util.function.Consumer;
 
 public class MapScreen extends ScreenAdapter {
-    private static final float ACCELERATION = 0.2F;
+    private static final float ACCELERATION = 20F;
     private static final float MIN_VELOCITY = 2.5F;
     private static final int EDGE = 60;
     private static final int GRID = 48;
@@ -46,11 +46,11 @@ public class MapScreen extends ScreenAdapter {
             if (Gdx.input.getX() < EDGE || Gdx.input.isKeyPressed(Input.Keys.LEFT)
                     || Gdx.input.isKeyPressed(Input.Keys.A)) {
                 if (velocity[0] == 0) velocity[0] = -MIN_VELOCITY;
-                velocity[0] -= ACCELERATION;
+                velocity[0] -= ACCELERATION * Gdx.graphics.getDeltaTime();
             } else if (Gdx.input.getX() > Gdx.graphics.getWidth() - EDGE || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
                     || Gdx.input.isKeyPressed(Input.Keys.D)) {
                 if (velocity[0] == 0) velocity[0] = MIN_VELOCITY;
-                velocity[0] += ACCELERATION;
+                velocity[0] += ACCELERATION * Gdx.graphics.getDeltaTime();
             } else {
                 velocity[0] = 0;
             }
@@ -58,11 +58,11 @@ public class MapScreen extends ScreenAdapter {
             if (Gdx.input.getY() > Gdx.graphics.getHeight() - EDGE || Gdx.input.isKeyPressed(Input.Keys.DOWN)
                     || Gdx.input.isKeyPressed(Input.Keys.S)) {
                 if (velocity[1] == 0) velocity[1] = -MIN_VELOCITY;
-                velocity[1] -= ACCELERATION;
+                velocity[1] -= ACCELERATION * Gdx.graphics.getDeltaTime();
             } else if (Gdx.input.getY() < EDGE || Gdx.input.isKeyPressed(Input.Keys.UP)
                     || Gdx.input.isKeyPressed(Input.Keys.W)) {
                 if (velocity[1] == 0) velocity[1] = MIN_VELOCITY;
-                velocity[1] += ACCELERATION;
+                velocity[1] += ACCELERATION * Gdx.graphics.getDeltaTime();
             } else {
                 velocity[1] = 0;
             }
@@ -100,6 +100,7 @@ public class MapScreen extends ScreenAdapter {
     @Override
     public String getDebugText() {
         String out = String.format("Pos: %.1f, %.1f", pos[0], pos[1]);
+
         if (currentMenu != -1) {
             out += "\n" + MENUS[currentMenu].getDebugText();
         }
