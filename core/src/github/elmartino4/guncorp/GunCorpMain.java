@@ -23,6 +23,8 @@ public class GunCorpMain extends ApplicationAdapter {
 	ExtendViewport viewport;
 	BitmapFont font;
 
+	private float fps = 60;
+
 	private final ScreenAdapter[] SCREENS = {
 			new MapScreen(this::onMenuData)
 	};
@@ -53,7 +55,9 @@ public class GunCorpMain extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		String text = String.format("%.2f FPS\n", 1D/Gdx.graphics.getDeltaTime());
+		fps *= 0.99;
+		fps += 1D/Gdx.graphics.getDeltaTime() * 0.01;
+		String text = String.format("%.2f FPS\n", fps);
 
 		ScreenUtils.clear(1, 0, 0, 1);
 
