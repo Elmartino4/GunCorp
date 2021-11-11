@@ -10,6 +10,8 @@ public class DesktopLauncher {
 		config.title = "GunCorp";
 		config.width = 1500;
 		config.height = 800;
+		config.foregroundFPS = 0;
+		config.vSyncEnabled = false;
 		new LwjglApplication(new GunCorpMain(), config);
 	}
 }
