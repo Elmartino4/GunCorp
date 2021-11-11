@@ -33,6 +33,16 @@ heavily purified minerals also have a grade, these are `D` for >98%, `C` for >99
 
 otherwise, mineral names are randomly generated using a dictionary like elements.
 
+### Naturally generating minerals 
+Between 4 and 10 minerals occur naturally where whichever has a higher perlin noise value is generated in a particular area code.
+Each mineral consists of up to 20 random elements in range N<=7, M<=7.
+
+These elements may fail to generate if any of the following conditions are met:
+ - The element is radioactive (has a decay rate >0)
+ - The element is likely to cold react with itself
+ - The element is likely to hot react with itself
+ - It is not solid at room temperature (300 °K)
+
 ## Elements
 Each element has various associated statistics which determine their value in the physics sim environment
 

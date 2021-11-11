@@ -1,5 +1,6 @@
 package github.elmartino4.guncorp.map;
 
-public class MineralData {
+import java.util.Map;
 
+public class MineralData {
 }
