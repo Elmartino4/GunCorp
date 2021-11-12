@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import github.elmartino4.guncorp.map.MapScreen;
-import github.elmartino4.guncorp.menus.MenuData;
+import github.elmartino4.guncorp.menu.MenuData;
 
 public class GunCorpMain extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -98,8 +97,8 @@ public class GunCorpMain extends ApplicationAdapter {
 	}
 
 	public void onMenuData(MenuData data){
-		if(data == MenuData.QUIT) Gdx.app.exit();
-		if(data == MenuData.PEDIA) Gdx.app.exit();
-		if(data == MenuData.MY_CORP) Gdx.app.exit();
+		if(data.equals(MenuData.QUIT))		Gdx.app.exit();
+		if(data.equals(MenuData.PEDIA))		Gdx.app.exit();
+		if(data.equals(MenuData.MY_CORP))	Gdx.app.exit();
 	}
 }
