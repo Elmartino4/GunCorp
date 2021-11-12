@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.menus;
+package github.elmartino4.guncorp.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

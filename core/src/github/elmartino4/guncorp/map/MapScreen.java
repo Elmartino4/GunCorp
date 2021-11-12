@@ -7,15 +7,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import github.elmartino4.guncorp.Menu;
 import github.elmartino4.guncorp.ScreenAdapter;
-import github.elmartino4.guncorp.menus.EscapeMenu;
-import github.elmartino4.guncorp.menus.MenuData;
+import github.elmartino4.guncorp.menu.AreaMenu;
+import github.elmartino4.guncorp.menu.EscapeMenu;
+import github.elmartino4.guncorp.menu.MenuData;
 
 import java.util.function.Consumer;
 
 public class MapScreen extends ScreenAdapter {
     private static final float ACCELERATION = 20F;
     private static final float MIN_VELOCITY = 2.5F;
-    private static final int EDGE = 60;
+    private static final int EDGE = 160;
     private static final int GRID = 48;
     private static final float MAP_SIZE = 40;
     private final Menu[] MENUS;
@@ -23,12 +24,15 @@ public class MapScreen extends ScreenAdapter {
     private int currentMenu = -1;
     private final float[] pos = new float[2];
     private final float[] velocity = new float[2];
-    public final MapData mapData = new MapData(69);
+    public final MapData mapData = new MapData(42069);
     public Consumer<MenuData> menuDataConsumer;
 
     public MapScreen(Consumer<MenuData> consumer) {
         menuDataConsumer = consumer;
-        MENUS = new Menu[] { new EscapeMenu(consumer) };
+        MENUS = new Menu[]{
+                new EscapeMenu(consumer),
+                new AreaMenu(this::onAreaMenu)
+        };
     }
 
     @Override
@@ -67,6 +71,12 @@ public class MapScreen extends ScreenAdapter {
                 velocity[1] += ACCELERATION * Gdx.graphics.getDeltaTime();
             } else {
                 velocity[1] = 0;
+            }
+
+            if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
+                currentMenu = 1;
+                ((AreaMenu)MENUS[1]).setMenuLocation(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                    // idk why it just is
             }
         }
 
@@ -112,5 +122,9 @@ public class MapScreen extends ScreenAdapter {
         }
 
         return out;
+    }
+
+    private void onAreaMenu (MenuData menuData) {
+
     }
 }
