@@ -8,18 +8,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
-import github.elmartino4.guncorp.Menu;
+import github.elmartino4.guncorp.GameData;
 
 import java.util.function.Consumer;
 
-public class EscapeMenu extends Menu {
+public class EscapeMenu extends AbstractMenu {
     BitmapFont font;
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-    Consumer<MenuData> menuDataConsumer;
 
-    public EscapeMenu(Consumer<MenuData> consumer){
-        menuDataConsumer = consumer;
+    public EscapeMenu (GameData gameData) {
+        super(gameData);
     }
 
     @Override
@@ -34,17 +33,17 @@ public class EscapeMenu extends Menu {
     }
 
     @Override
-    public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
+    public void render() {
         String text = "Press ESC to return to the game\nQ to quit\nB to enter My Corporation menu\nC for Corpopedia";
-        batch.begin();
+        super.data.batch.begin();
 
-        font.draw(batch, text, Gdx.graphics.getWidth() / 4F, Gdx.graphics.getHeight() / 3F * 2F,
+        font.draw(super.data.batch, text, Gdx.graphics.getWidth() / 4F, Gdx.graphics.getHeight() / 3F * 2F,
                 Gdx.graphics.getWidth()/2F, Align.center, false);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) menuDataConsumer.accept(MenuData.QUIT);
-        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) menuDataConsumer.accept(MenuData.MY_CORP);
-        if(Gdx.input.isKeyJustPressed(Input.Keys.C)) menuDataConsumer.accept(MenuData.PEDIA);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) super.data.menuDataConsumer.accept(MenuData.QUIT);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) super.data.menuDataConsumer.accept(MenuData.MY_CORP);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.C)) super.data.menuDataConsumer.accept(MenuData.PEDIA);
 
-        batch.end();
+        super.data.batch.end();
     }
 }

@@ -11,25 +11,28 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import github.elmartino4.guncorp.map.MapScreen;
+import github.elmartino4.guncorp.menu.AbstractMenu;
+import github.elmartino4.guncorp.menu.AreaMenu;
+import github.elmartino4.guncorp.menu.EscapeMenu;
 import github.elmartino4.guncorp.menu.MenuData;
+import github.elmartino4.guncorp.screen.AbstractScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
-	SpriteBatch batch;
-	ShapeRenderer shapeRenderer;
-
 	FreeTypeFontGenerator generator;
 	FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-	OrthographicCamera camera;
-	ExtendViewport viewport;
 	BitmapFont font;
+
+	public GameData gameData = new GameData(this::onMenuData);
 
 	private float fps = 60;
 
-	private final ScreenAdapter[] SCREENS = { new MapScreen(this::onMenuData) };
+	public int currentScreen = 0;
 
-	int currentScreen = 0;
+	private final AbstractScreen[] SCREENS = { new MapScreen(gameData) };
 
 	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
+		this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
+
 		UserConfig.configChangeCallback = configChangeCallback;
 	}
 
@@ -39,22 +42,25 @@ public class GunCorpMain extends ApplicationAdapter {
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 32;
 
-		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
+		this.gameData.batch = new SpriteBatch();
+		this.gameData.shapeRenderer = new ShapeRenderer();
 
 		font = generator.generateFont(parameter);
 
 		// Camera
-		camera = new OrthographicCamera();
+		this.gameData.camera = new OrthographicCamera();
 
 		// Viewport
-		viewport = new ExtendViewport(1500, 800, camera);
+		this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
 
-		for (ApplicationAdapter screen : SCREENS) {
+		for (AbstractScreen screen : SCREENS) {
 			screen.create();
 		}
 
 		UserConfig.generate();
+		for (AbstractMenu menu : gameData.menus) {
+			menu.create();
+		}
 	}
 
 	@Override
@@ -65,15 +71,18 @@ public class GunCorpMain extends ApplicationAdapter {
 
 		ScreenUtils.clear(1, 0, 0, 1);
 
-		SCREENS[currentScreen].render(batch, shapeRenderer);
+		SCREENS[currentScreen].render();
 
 		text += SCREENS[currentScreen].getDebugText();
 
-		batch.begin();
+		if (gameData.getCurrentMenu() != -1)
+			gameData.menus[gameData.getCurrentMenu()].render();
 
-		font.draw(batch, text, 10, Gdx.graphics.getHeight() - 10);
+		this.gameData.batch.begin();
 
-		batch.end();
+		font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
+
+		this.gameData.batch.end();
 	}
 
 	@Override
@@ -82,23 +91,15 @@ public class GunCorpMain extends ApplicationAdapter {
 		shapeRenderer.dispose();
 		font.dispose();
 		generator.dispose();
-
-		for (ApplicationAdapter screen : SCREENS) {
-			screen.dispose();
-		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.setMinWorldWidth(width);
-		viewport.setMinWorldHeight(height);
-		viewport.update(width, height, true);
+		this.gameData.viewport.setMinWorldWidth(width);
+		this.gameData.viewport.setMinWorldHeight(height);
+		this.gameData.viewport.update(width, height, true);
 
-		batch.setProjectionMatrix(camera.combined);
-
-		for (ApplicationAdapter screen : SCREENS) {
-			screen.resize(width, height);
-		}
+		this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
 	}
 
 	public void onMenuData(MenuData data) {
