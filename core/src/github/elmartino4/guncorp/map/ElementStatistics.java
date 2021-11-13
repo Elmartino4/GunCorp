@@ -26,8 +26,8 @@ public class ElementStatistics {
         this.preferredDensity = preferredDensity;
     }
 
-    public static ElementStatistics fromElement(Element element){
-        OpenSimplexNoise noise = new OpenSimplexNoise(SEED);
+    public static ElementStatistics fromElement(long seed, SafeElement element){
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
 
         int M = element.M;
         int N = element.N;

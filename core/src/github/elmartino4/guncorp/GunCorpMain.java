@@ -18,13 +18,13 @@ import github.elmartino4.guncorp.menu.MenuData;
 import github.elmartino4.guncorp.screen.AbstractScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
-	FreeTypeFontGenerator generator;
-	FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-	BitmapFont font;
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    BitmapFont font;
 
-	public GameData gameData = new GameData(this::onMenuData);
+    public GameData gameData = new GameData(this::onMenuData);
 
-	private float fps = 60;
+    private float fps = 60;
 
 	public int currentScreen = 0;
 
@@ -38,83 +38,79 @@ public class GunCorpMain extends ApplicationAdapter {
 		UserConfig.configChangeCallback = configChangeCallback;
 	}
 
-	public GunCorpMain () {
-		this.gameData.menus = new AbstractMenu[]{
-				new EscapeMenu(gameData),
-				new AreaMenu(gameData)
-		};
-	}
-
-	@Override
-	public void create() {
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
-		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 32;
-
-		this.gameData.batch = new SpriteBatch();
-		this.gameData.shapeRenderer = new ShapeRenderer();
-
-		font = generator.generateFont(parameter);
-
-		// Camera
-		this.gameData.camera = new OrthographicCamera();
-
-		// Viewport
-		this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
-
-		for (AbstractScreen screen : SCREENS) {
-			screen.create();
-		}
-
-		UserConfig.generate();
-		for (AbstractMenu menu : gameData.menus) {
-			menu.create();
-		}
-	}
-
-	@Override
-	public void render() {
-		fps *= 0.99;
-		fps += 1D / Gdx.graphics.getDeltaTime() * 0.01;
-		String text = String.format("%.2f FPS\n", fps);
-
-		ScreenUtils.clear(1, 0, 0, 1);
-
-		SCREENS[currentScreen].render();
-
-		text += SCREENS[currentScreen].getDebugText();
-
-		if (gameData.getCurrentMenu() != -1)
-			gameData.menus[gameData.getCurrentMenu()].render();
-
-		this.gameData.batch.begin();
-
-		font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
 
 
-		this.gameData.batch.end();
-	}
+    @Override
+    public void create() {
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 32;
 
-	@Override
-	public void dispose () {
-		this.gameData.batch.dispose();
-		this.gameData.shapeRenderer.dispose();
-		font.dispose();
-		generator.dispose();
-	}
+        this.gameData.batch = new SpriteBatch();
+        this.gameData.shapeRenderer = new ShapeRenderer();
 
-	@Override
-	public void resize(int width, int height) {
-		this.gameData.viewport.setMinWorldWidth(width);
-		this.gameData.viewport.setMinWorldHeight(height);
-		this.gameData.viewport.update(width, height, true);
+        font = generator.generateFont(parameter);
 
-		this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
-	}
-  
-	public void onMenuData (MenuData data) {
-		if(data.equals(MenuData.QUIT))		Gdx.app.exit();
-		if(data.equals(MenuData.PEDIA))		Gdx.app.exit();
-		if(data.equals(MenuData.MY_CORP))	Gdx.app.exit();
-	}
+
+        //Camera
+        this.gameData.camera = new OrthographicCamera();
+
+        //Viewport
+        this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
+
+        for (AbstractScreen screen : SCREENS) {
+            screen.create();
+        }
+
+
+        for (AbstractMenu menu : gameData.menus) {
+            menu.create();
+        }
+    }
+
+    @Override
+    public void render() {
+        fps *= 0.99;
+        fps += 1D / Gdx.graphics.getDeltaTime() * 0.01;
+        String text = String.format("%.2f FPS\n", fps);
+
+        ScreenUtils.clear(1, 0, 0, 1);
+
+        SCREENS[currentScreen].render();
+
+        text += SCREENS[currentScreen].getDebugText();
+
+        if (gameData.getCurrentMenu() != -1)
+            gameData.menus[gameData.getCurrentMenu()].render();
+
+        this.gameData.batch.begin();
+
+        font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
+
+
+        this.gameData.batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        this.gameData.batch.dispose();
+        this.gameData.shapeRenderer.dispose();
+        font.dispose();
+        generator.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        this.gameData.viewport.setMinWorldWidth(width);
+        this.gameData.viewport.setMinWorldHeight(height);
+        this.gameData.viewport.update(width, height, true);
+
+        this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
+    }
+
+    public void onMenuData(MenuData data) {
+        if (data.equals(MenuData.QUIT)) Gdx.app.exit();
+        if (data.equals(MenuData.PEDIA)) Gdx.app.exit();
+        if (data.equals(MenuData.MY_CORP)) Gdx.app.exit();
+    }
 }
