@@ -11,7 +11,7 @@ public class MapData {
     protected final List<Color> mineralColours = new ArrayList<>();
     protected final Random random;
 
-    public MapData (long seed) {
+    public MapData(long seed) {
         SEED = seed;
         random = new Random(SEED);
         ElementStatistics.SEED = seed;
@@ -28,15 +28,15 @@ public class MapData {
         }
     }
 
-    public Map<SafeElement, Float> getData (int x, int y) {
+    public Map<SafeElement, Float> getData(int x, int y) {
         return minerals.get(getMineralAt(x, y)).getData(x / SCALE, y / SCALE);
     }
 
-    public Color getColor (int x, int y) {
+    public Color getColor(int x, int y) {
         return mineralColours.get(getMineralAt(x, y));
     }
 
-    protected int getMineralAt (int x, int y) {
+    protected int getMineralAt(int x, int y) {
         int index = 0;
         double val = minerals.get(0).noise.eval(x / SCALE, y / SCALE);
 

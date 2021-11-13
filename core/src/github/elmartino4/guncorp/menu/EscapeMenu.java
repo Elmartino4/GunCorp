@@ -17,7 +17,7 @@ public class EscapeMenu extends AbstractMenu {
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
-    public EscapeMenu (GameData gameData) {
+    public EscapeMenu(GameData gameData) {
         super(gameData);
     }
 
@@ -38,7 +38,7 @@ public class EscapeMenu extends AbstractMenu {
         super.data.batch.begin();
 
         font.draw(super.data.batch, text, Gdx.graphics.getWidth() / 4F, Gdx.graphics.getHeight() / 3F * 2F,
-                Gdx.graphics.getWidth()/2F, Align.center, false);
+                Gdx.graphics.getWidth() / 2F, Align.center, false);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) super.data.menuDataConsumer.accept(MenuData.QUIT);
         if (Gdx.input.isKeyJustPressed(Input.Keys.B)) super.data.menuDataConsumer.accept(MenuData.MY_CORP);

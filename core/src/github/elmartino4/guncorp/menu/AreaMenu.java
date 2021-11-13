@@ -17,12 +17,12 @@ public class AreaMenu extends AbstractMenu {
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
-    public AreaMenu (GameData gameData) {
+    public AreaMenu(GameData gameData) {
         super(gameData);
     }
 
     @Override
-    public void create () {
+    public void create() {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24;
@@ -31,7 +31,7 @@ public class AreaMenu extends AbstractMenu {
     }
 
     @Override
-    public void render () {
+    public void render() {
         super.data.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         super.data.shapeRenderer.rect(x, y, contextMenuData.getSize()[0], contextMenuData.getSize()[1],
                 INNER, INNER, INNER, INNER);
@@ -53,7 +53,7 @@ public class AreaMenu extends AbstractMenu {
     }
 
     @Override
-    public void show () {
+    public void show() {
         int x = Gdx.input.getX();
         int y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
