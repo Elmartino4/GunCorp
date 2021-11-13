@@ -18,13 +18,21 @@ public class DesktopLauncher {
 		config.vSyncEnabled = false;
 		new LwjglApplication(new GunCorpMain(new ConfigChangeCallback() {
 			@Override
-			public Object getConfig(String key) {
-				return ReflectionUtil.getFieldValue(this, key);
+			public <T> T getConfig(String key) {
+				try {
+					return (T) ReflectionUtil.<T>getFieldValue(config, key);
+				} catch (NoSuchFieldException | IllegalAccessException e) {
+					throw new Error(e);
+				}
 			}
 
 			@Override
 			public void setConfig(String key, Object value) {
-				ReflectionUtil.setFieldValue(this, key, value);
+				try {
+					ReflectionUtil.setFieldValue(config, key, value);
+				} catch (NoSuchFieldException | IllegalAccessException e) {
+					throw new Error(e);
+				}
 			}
 		}), config);
 	}

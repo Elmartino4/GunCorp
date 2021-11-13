@@ -11,15 +11,16 @@ public class UserConfig {
         prefs = Gdx.app.getPreferences("github.elmartino4.guncorp.UserConfig");
 
         if (prefs.contains("width") || prefs.contains("height")) {
-            Gdx.graphics.setWindowedMode(prefs.getInteger("width", 1500), prefs.getInteger("height", 800));
+            Gdx.graphics.setWindowedMode(prefs.getInteger("width", (int) configChangeCallback.getConfig("width")),
+                    prefs.getInteger("height", (int) configChangeCallback.getConfig("height")));
         }
 
         if (prefs.contains("foregroundFPS")) {
-            configChangeCallback.setForegroundFPS(prefs.getInteger("foregroundFPS", 0));
+            configChangeCallback.setConfig("foregroundFPS", prefs.getInteger("foregroundFPS"));
         }
 
         if (prefs.contains("vSyncEnabled")) {
-            Gdx.graphics.setVSync(prefs.getBoolean("vSyncEnabled", false));
+            Gdx.graphics.setVSync(prefs.getBoolean("vSyncEnabled"));
         }
     }
 }
