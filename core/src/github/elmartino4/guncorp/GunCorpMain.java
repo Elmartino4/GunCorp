@@ -18,9 +18,6 @@ import github.elmartino4.guncorp.menu.MenuData;
 import github.elmartino4.guncorp.screen.AbstractScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
-	SpriteBatch batch;
-	ShapeRenderer shapeRenderer;
-
 	FreeTypeFontGenerator generator;
 	FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 	BitmapFont font;
@@ -31,12 +28,21 @@ public class GunCorpMain extends ApplicationAdapter {
 
 	public int currentScreen = 0;
 
-	private final AbstractScreen[] SCREENS = { new MapScreen(gameData) };
+	private final AbstractScreen[] SCREENS = {
+			new MapScreen(gameData)
+	};
 
 	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
 		this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
 
 		UserConfig.configChangeCallback = configChangeCallback;
+	}
+
+	public GunCorpMain () {
+		this.gameData.menus = new AbstractMenu[]{
+				new EscapeMenu(gameData),
+				new AreaMenu(gameData)
+		};
 	}
 
 	@Override
@@ -85,13 +91,14 @@ public class GunCorpMain extends ApplicationAdapter {
 
 		font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
 
+
 		this.gameData.batch.end();
 	}
 
 	@Override
-	public void dispose() {
-		batch.dispose();
-		shapeRenderer.dispose();
+	public void dispose () {
+		this.gameData.batch.dispose();
+		this.gameData.shapeRenderer.dispose();
 		font.dispose();
 		generator.dispose();
 	}
@@ -104,13 +111,10 @@ public class GunCorpMain extends ApplicationAdapter {
 
 		this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
 	}
-
-	public void onMenuData(MenuData data) {
-		if (data == MenuData.QUIT)
-			Gdx.app.exit();
-		if (data == MenuData.PEDIA)
-			Gdx.app.exit();
-		if (data == MenuData.MY_CORP)
-			Gdx.app.exit();
+  
+	public void onMenuData (MenuData data) {
+		if(data.equals(MenuData.QUIT))		Gdx.app.exit();
+		if(data.equals(MenuData.PEDIA))		Gdx.app.exit();
+		if(data.equals(MenuData.MY_CORP))	Gdx.app.exit();
 	}
 }
