@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
 import github.elmartino4.guncorp.map.MapScreen;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.AreaMenu;
@@ -25,18 +26,19 @@ public class GunCorpMain extends ApplicationAdapter {
 
     private float fps = 60;
 
-    private final AbstractScreen[] SCREENS = {
-            new MapScreen(gameData)
-    };
+	public int currentScreen = 0;
 
-    int currentScreen = 0;
+	private final AbstractScreen[] SCREENS = {
+			new MapScreen(gameData)
+	};
 
-    public GunCorpMain() {
-        this.gameData.menus = new AbstractMenu[]{
-                new EscapeMenu(gameData),
-                new AreaMenu(gameData)
-        };
-    }
+	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
+		this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
+
+		UserConfig.configChangeCallback = configChangeCallback;
+	}
+
+
 
     @Override
     public void create() {
@@ -49,6 +51,7 @@ public class GunCorpMain extends ApplicationAdapter {
 
         font = generator.generateFont(parameter);
 
+
         //Camera
         this.gameData.camera = new OrthographicCamera();
 
@@ -58,6 +61,7 @@ public class GunCorpMain extends ApplicationAdapter {
         for (AbstractScreen screen : SCREENS) {
             screen.create();
         }
+
 
         for (AbstractMenu menu : gameData.menus) {
             menu.create();
@@ -82,6 +86,7 @@ public class GunCorpMain extends ApplicationAdapter {
         this.gameData.batch.begin();
 
         font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
+
 
         this.gameData.batch.end();
     }
