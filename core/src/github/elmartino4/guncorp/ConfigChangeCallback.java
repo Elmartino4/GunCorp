@@ -1,7 +1,7 @@
 package github.elmartino4.guncorp;
 
 public interface ConfigChangeCallback {
-    void setForegroundFPS(int foregroundFPS);
+    Object getConfig(String key);
 
-    void setBackgroundFPS(int backgroundFPS);
+    void setConfig(String key, Object value);
 }

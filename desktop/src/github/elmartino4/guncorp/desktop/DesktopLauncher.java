@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import github.elmartino4.guncorp.ConfigChangeCallback;
 import github.elmartino4.guncorp.GunCorpMain;
+import github.elmartino4.guncorp.ReflectionUtil;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
@@ -17,13 +18,13 @@ public class DesktopLauncher {
 		config.vSyncEnabled = false;
 		new LwjglApplication(new GunCorpMain(new ConfigChangeCallback() {
 			@Override
-			public void setForegroundFPS(int foregroundFPS) {
-				config.foregroundFPS = foregroundFPS;
+			public Object getConfig(String key) {
+				return ReflectionUtil.getFieldValue(this, key);
 			}
 
 			@Override
-			public void setBackgroundFPS(int backgroundFPS) {
-				config.backgroundFPS = backgroundFPS;
+			public void setConfig(String key, Object value) {
+				ReflectionUtil.setFieldValue(this, key, value);
 			}
 		}), config);
 	}
