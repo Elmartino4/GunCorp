@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
 import github.elmartino4.guncorp.map.MapScreen;
 import github.elmartino4.guncorp.menu.MenuData;
 
@@ -24,14 +25,16 @@ public class GunCorpMain extends ApplicationAdapter {
 
 	private float fps = 60;
 
-	private final ScreenAdapter[] SCREENS = {
-			new MapScreen(this::onMenuData)
-	};
+	private final ScreenAdapter[] SCREENS = { new MapScreen(this::onMenuData) };
 
 	int currentScreen = 0;
 
+	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
+		UserConfig.configChangeCallback = configChangeCallback;
+	}
+
 	@Override
-	public void create () {
+	public void create() {
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = 32;
@@ -41,21 +44,23 @@ public class GunCorpMain extends ApplicationAdapter {
 
 		font = generator.generateFont(parameter);
 
-		//Camera
+		// Camera
 		camera = new OrthographicCamera();
 
-		//Viewport
+		// Viewport
 		viewport = new ExtendViewport(1500, 800, camera);
 
 		for (ApplicationAdapter screen : SCREENS) {
 			screen.create();
 		}
+
+		UserConfig.generate();
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		fps *= 0.99;
-		fps += 1D/Gdx.graphics.getDeltaTime() * 0.01;
+		fps += 1D / Gdx.graphics.getDeltaTime() * 0.01;
 		String text = String.format("%.2f FPS\n", fps);
 
 		ScreenUtils.clear(1, 0, 0, 1);
@@ -72,7 +77,7 @@ public class GunCorpMain extends ApplicationAdapter {
 	}
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
 		shapeRenderer.dispose();
 		font.dispose();
@@ -96,9 +101,12 @@ public class GunCorpMain extends ApplicationAdapter {
 		}
 	}
 
-	public void onMenuData(MenuData data){
-		if(data.equals(MenuData.QUIT))		Gdx.app.exit();
-		if(data.equals(MenuData.PEDIA))		Gdx.app.exit();
-		if(data.equals(MenuData.MY_CORP))	Gdx.app.exit();
+	public void onMenuData(MenuData data) {
+		if (data == MenuData.QUIT)
+			Gdx.app.exit();
+		if (data == MenuData.PEDIA)
+			Gdx.app.exit();
+		if (data == MenuData.MY_CORP)
+			Gdx.app.exit();
 	}
 }
