@@ -122,7 +122,7 @@ public class MapScreen extends AbstractScreen {
 
     private int[] mouseToGrid() {
         return new int[]{
-                (Gdx.input.getX() - (int) ((pos[0] * GRID) % GRID)) / GRID + (int) pos[0],
+                (Gdx.input.getX() + (int) ((pos[0] * GRID) % GRID)) / GRID + (int) pos[0],
                 (Gdx.graphics.getHeight() - Gdx.input.getY() + (int) ((pos[1] * GRID) % GRID)) / GRID + (int) pos[1]
         };
     }
