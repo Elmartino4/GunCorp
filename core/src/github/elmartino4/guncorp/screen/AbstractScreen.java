@@ -16,6 +16,8 @@ public abstract class AbstractScreen {
 
     public void begin () {}
 
+    public void create () {}
+
     public String getDebugText(){
         return "";
     }

@@ -30,9 +30,9 @@ public class AreaMenu extends AbstractMenu {
     @Override
     public void show () {
         int x = Gdx.input.getX();
-        int y = Gdx.input.getY();
+        int y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
         this.x = x - ((x > Gdx.graphics.getWidth() * 0.8) ? contextMenuData.getSize()[0] : 0);
-        this.y = y - ((y < Gdx.graphics.getHeight() * 0.8) ? contextMenuData.getSize()[1] : 0);
+        this.y = y - ((y > Gdx.graphics.getHeight() * 0.8) ? contextMenuData.getSize()[1] : 0);
     }
 }

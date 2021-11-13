@@ -54,6 +54,14 @@ public class GunCorpMain extends ApplicationAdapter {
 
 		//Viewport
 		this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
+
+		for (AbstractScreen screen : SCREENS) {
+			screen.create();
+		}
+
+		for (AbstractMenu menu : gameData.menus) {
+			menu.create();
+		}
 	}
 
 	@Override
@@ -67,6 +75,9 @@ public class GunCorpMain extends ApplicationAdapter {
 		SCREENS[currentScreen].render();
 
 		text += SCREENS[currentScreen].getDebugText();
+
+		if (gameData.getCurrentMenu() != -1)
+			gameData.menus[gameData.getCurrentMenu()].render();
 
 		this.gameData.batch.begin();
 

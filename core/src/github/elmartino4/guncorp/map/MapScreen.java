@@ -58,16 +58,16 @@ public class MapScreen extends AbstractScreen {
             }
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
-                super.data.setCurrentMenu(1);
+                setMenu(1);
             }
         }
 
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && super.data.getCurrentMenu() == 1){
+            setMenu(-1);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            super.data.setCurrentMenu((super.data.getCurrentMenu() != -1) ? -1 : 0);
-            if (super.data.getCurrentMenu() != -1) {
-                velocity[0] = 0;
-                velocity[1] = 0;
-            }
+            setMenu((super.data.getCurrentMenu() != -1) ? -1 : 0);
         }
 
         pos[0] += velocity[0] * Gdx.graphics.getDeltaTime();
@@ -95,5 +95,14 @@ public class MapScreen extends AbstractScreen {
     public String getDebugText () {
         String out = String.format("Pos: %.1f, %.1f", pos[0], pos[1]);
         return out;
+    }
+
+    private void setMenu (int menu) {
+        super.data.setCurrentMenu(menu);
+
+        if (menu != -1) {
+            velocity[0] = 0;
+            velocity[1] = 0;
+        }
     }
 }
