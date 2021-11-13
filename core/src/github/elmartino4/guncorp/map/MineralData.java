@@ -2,18 +2,34 @@ package github.elmartino4.guncorp.map;
 
 import github.elmartino4.guncorp.OpenSimplexNoise;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class MineralData {
-    OpenSimplexNoise noise;
-    List<OpenSimplexNoise> elementDistributionList;
-    List<Element> elementList;
+    public OpenSimplexNoise noise;
+    public List<OpenSimplexNoise> elementDistributionList = new ArrayList<>();
+    public List<SafeElement> elementList = new ArrayList<>();
 
-    public MineralData(Random random){
-
+    public MineralData(long noiseSeed, Random random){
+        noise = new OpenSimplexNoise(noiseSeed);
+        for (int i = 0; i < random.nextFloat() * 4F + 2F; i++) {
+            elementList.add(new SafeElement(random.nextInt(5) + 1, random.nextInt(5) + 1));
+            elementDistributionList.add(new OpenSimplexNoise(noiseSeed * 10 + i));
+        }
     }
 
-    //public
+    public Map<SafeElement, Float> getData (float x, float y) {
+        Map<SafeElement, Float> out = new HashMap<>();
+
+        float total = 0;
+
+        for (OpenSimplexNoise elementNoise : elementDistributionList) {
+            total += elementNoise.eval(x, y) + 1;
+        }
+
+        for (int i = 0; i < elementList.size(); i++) {
+            out.put(elementList.get(i), (float)(elementDistributionList.get(i).eval(x, y) + 1) / total);
+        }
+
+        return out;
+    }
 }

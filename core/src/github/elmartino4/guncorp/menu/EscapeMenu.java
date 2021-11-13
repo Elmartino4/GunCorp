@@ -40,9 +40,9 @@ public class EscapeMenu extends AbstractMenu {
         font.draw(super.data.batch, text, Gdx.graphics.getWidth() / 4F, Gdx.graphics.getHeight() / 3F * 2F,
                 Gdx.graphics.getWidth()/2F, Align.center, false);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) super.data.menuDataConsumer.accept(MenuData.QUIT);
-        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) super.data.menuDataConsumer.accept(MenuData.MY_CORP);
-        if(Gdx.input.isKeyJustPressed(Input.Keys.C)) super.data.menuDataConsumer.accept(MenuData.PEDIA);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) super.data.menuDataConsumer.accept(MenuData.QUIT);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) super.data.menuDataConsumer.accept(MenuData.MY_CORP);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C)) super.data.menuDataConsumer.accept(MenuData.PEDIA);
 
         super.data.batch.end();
     }
