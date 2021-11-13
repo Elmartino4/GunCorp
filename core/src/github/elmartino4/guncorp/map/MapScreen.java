@@ -5,11 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import github.elmartino4.guncorp.GameData;
-import github.elmartino4.guncorp.screen.AbstractScreen;
 import github.elmartino4.guncorp.menu.AreaMenu;
-import github.elmartino4.guncorp.menu.MenuData;
+import github.elmartino4.guncorp.menu.ContextMenuData;
+import github.elmartino4.guncorp.screen.AbstractScreen;
 
-import java.util.function.Consumer;
+import java.util.Map;
 
 public class MapScreen extends AbstractScreen {
     private static final float ACCELERATION = 20F;
@@ -57,12 +57,12 @@ public class MapScreen extends AbstractScreen {
                 velocity[1] = 0;
             }
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 setMenu(1);
             }
         }
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && super.data.getCurrentMenu() == 1){
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && super.data.getCurrentMenu() == 1) {
             setMenu(-1);
         }
 
@@ -92,17 +92,38 @@ public class MapScreen extends AbstractScreen {
     }
 
     @Override
-    public String getDebugText () {
+    public String getDebugText() {
         String out = String.format("Pos: %.1f, %.1f", pos[0], pos[1]);
         return out;
     }
 
-    private void setMenu (int menu) {
+    private void setMenu(int menu) {
         super.data.setCurrentMenu(menu);
+
+        if (menu == 1) {
+            ContextMenuData data = ((AreaMenu) super.data.menus[menu]).contextMenuData;
+
+            int[] gridPos = mouseToGrid();
+            String name = String.format("Mineral #%d", mapData.getMineralAt(gridPos[0], gridPos[1]) + 1);
+
+            data.clear();
+            data.add(new ContextMenuData.SimpleSubSection(name));
+
+            for (Map.Entry<SafeElement, Float> entry : mapData.getData(gridPos[0], gridPos[1]).entrySet()) {
+                data.add(new ContextMenuData.SimpleSubSection(entry.toString()));
+            }
+        }
 
         if (menu != -1) {
             velocity[0] = 0;
             velocity[1] = 0;
         }
+    }
+
+    private int[] mouseToGrid() {
+        return new int[]{
+                (Gdx.input.getX() - (int) ((pos[0] * GRID) % GRID)) / GRID + (int) pos[0],
+                (Gdx.graphics.getHeight() - Gdx.input.getY() + (int) ((pos[1] * GRID) % GRID)) / GRID + (int) pos[1]
+        };
     }
 }
