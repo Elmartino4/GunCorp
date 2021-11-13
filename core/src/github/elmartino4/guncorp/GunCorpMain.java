@@ -18,6 +18,9 @@ import github.elmartino4.guncorp.menu.MenuData;
 import github.elmartino4.guncorp.screen.AbstractScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
+	SpriteBatch batch;
+	ShapeRenderer shapeRenderer;
+
 	FreeTypeFontGenerator generator;
 	FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 	BitmapFont font;
