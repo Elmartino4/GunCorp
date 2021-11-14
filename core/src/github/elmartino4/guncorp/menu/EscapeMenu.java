@@ -46,4 +46,10 @@ public class EscapeMenu extends AbstractMenu {
 
         super.data.batch.end();
     }
+
+    @Override
+    public void dispose() {
+        generator.dispose();
+        font.dispose();
+    }
 }

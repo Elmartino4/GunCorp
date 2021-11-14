@@ -36,7 +36,7 @@ public class MapData {
         return mineralColours.get(getMineralAt(x, y));
     }
 
-    protected int getMineralAt(int x, int y) {
+    public int getMineralAt(int x, int y) {
         int index = 0;
         double val = minerals.get(0).noise.eval(x / SCALE, y / SCALE);
 

@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp;
+package github.elmartino4.guncorp.config;
 
 import java.lang.reflect.Field;
 

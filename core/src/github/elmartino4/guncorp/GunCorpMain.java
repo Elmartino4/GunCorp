@@ -10,7 +10,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import github.elmartino4.guncorp.map.MapScreen;
+import github.elmartino4.guncorp.config.ConfigChangeCallback;
+import github.elmartino4.guncorp.config.UserConfig;
+import github.elmartino4.guncorp.screen.CorpopediaScreen;
+import github.elmartino4.guncorp.screen.MapScreen;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.AreaMenu;
 import github.elmartino4.guncorp.menu.EscapeMenu;
@@ -29,7 +32,8 @@ public class GunCorpMain extends ApplicationAdapter {
 	public int currentScreen = 0;
 
 	private final AbstractScreen[] SCREENS = {
-			new MapScreen(gameData)
+			new MapScreen(gameData),
+            new CorpopediaScreen(gameData)
 	};
 
 	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
@@ -111,7 +115,13 @@ public class GunCorpMain extends ApplicationAdapter {
 
     public void onMenuData(MenuData data) {
         if (data.equals(MenuData.QUIT)) Gdx.app.exit();
-        if (data.equals(MenuData.PEDIA)) Gdx.app.exit();
+        if (data.equals(MenuData.PEDIA)) setScreen(1);
         if (data.equals(MenuData.MY_CORP)) Gdx.app.exit();
+    }
+
+    public void setScreen(int screen) {
+        gameData.setCurrentMenu(-1);
+        SCREENS[currentScreen].dispose();
+        currentScreen = screen;
     }
 }

@@ -14,6 +14,8 @@ public abstract class AbstractMenu {
 
     public void create () {}
 
+    public void dispose () {}
+
     public void show () {}
 
     public void hide () {}

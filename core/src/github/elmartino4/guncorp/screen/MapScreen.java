@@ -1,13 +1,14 @@
-package github.elmartino4.guncorp.map;
+package github.elmartino4.guncorp.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import github.elmartino4.guncorp.GameData;
+import github.elmartino4.guncorp.map.MapData;
+import github.elmartino4.guncorp.map.SafeElement;
 import github.elmartino4.guncorp.menu.AreaMenu;
 import github.elmartino4.guncorp.menu.ContextMenuData;
-import github.elmartino4.guncorp.screen.AbstractScreen;
 
 import java.util.Map;
 

@@ -60,4 +60,10 @@ public class AreaMenu extends AbstractMenu {
         this.x = x - ((x > Gdx.graphics.getWidth() * 0.8) ? contextMenuData.getSize()[0] : 0);
         this.y = y - ((y > Gdx.graphics.getHeight() * 0.8) ? contextMenuData.getSize()[1] : 0);
     }
+
+    @Override
+    public void dispose() {
+        font.dispose();
+        generator.dispose();
+    }
 }

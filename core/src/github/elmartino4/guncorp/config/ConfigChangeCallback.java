@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp;
+package github.elmartino4.guncorp.config;
 
 public interface ConfigChangeCallback {
     <T> T getConfig(String key);

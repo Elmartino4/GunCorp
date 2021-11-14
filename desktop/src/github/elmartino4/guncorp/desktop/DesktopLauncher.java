@@ -3,9 +3,9 @@ package github.elmartino4.guncorp.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import github.elmartino4.guncorp.ConfigChangeCallback;
+import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.GunCorpMain;
-import github.elmartino4.guncorp.ReflectionUtil;
+import github.elmartino4.guncorp.config.ReflectionUtil;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
