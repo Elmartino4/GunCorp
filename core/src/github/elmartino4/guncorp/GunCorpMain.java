@@ -38,8 +38,6 @@ public class GunCorpMain extends ApplicationAdapter {
 		UserConfig.configChangeCallback = configChangeCallback;
 	}
 
-
-
     @Override
     public void create() {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
@@ -106,6 +104,9 @@ public class GunCorpMain extends ApplicationAdapter {
         this.gameData.viewport.update(width, height, true);
 
         this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
+        this.gameData.shapeRenderer.setProjectionMatrix(this.gameData.camera.combined);
+
+        if (this.gameData.getCurrentMenu() == 1) this.gameData.setCurrentMenu(-1);
     }
 
     public void onMenuData(MenuData data) {

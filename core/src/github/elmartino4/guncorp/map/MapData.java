@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MapData {
     public final long SEED;
-    public static final float SCALE = 8F;
+    public static final float SCALE = 16F;
     protected final List<MineralData> minerals = new ArrayList<>();
     protected final List<Color> mineralColours = new ArrayList<>();
     protected final Random random;

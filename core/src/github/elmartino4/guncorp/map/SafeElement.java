@@ -15,6 +15,6 @@ public class SafeElement {
 
     @Override
     public String toString() {
-        return N + ", " + M;
+        return "Element{" + N + "," + M + "}";
     }
 }

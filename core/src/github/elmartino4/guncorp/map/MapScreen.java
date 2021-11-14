@@ -20,7 +20,7 @@ public class MapScreen extends AbstractScreen {
 
     private final float[] pos = new float[2];
     private final float[] velocity = new float[2];
-    public final MapData mapData = new MapData(42069);
+    public final MapData mapData = new MapData(4269);
 
     public MapScreen(GameData gameData) {
         super(gameData);
