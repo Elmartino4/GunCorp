@@ -6,7 +6,8 @@ import java.util.*;
 
 public class MapData {
     public final long SEED;
-    public static final float SCALE = 16F;
+    public static final float MINERAL_SCALE = 16F;
+    public static final float ELEMENT_SCALE = 64F;
     protected final List<MineralData> minerals = new ArrayList<>();
     protected final List<Color> mineralColours = new ArrayList<>();
     protected final Random random;
@@ -29,7 +30,7 @@ public class MapData {
     }
 
     public Map<SafeElement, Float> getData(int x, int y) {
-        return minerals.get(getMineralAt(x, y)).getData(x / SCALE, y / SCALE);
+        return minerals.get(getMineralAt(x, y)).getData(x / ELEMENT_SCALE, y / ELEMENT_SCALE);
     }
 
     public Color getColor(int x, int y) {
@@ -38,10 +39,10 @@ public class MapData {
 
     public int getMineralAt(int x, int y) {
         int index = 0;
-        double val = minerals.get(0).noise.eval(x / SCALE, y / SCALE);
+        double val = minerals.get(0).noise.eval(x / MINERAL_SCALE, y / MINERAL_SCALE);
 
         for (int i = 1; i < minerals.size(); i++) {
-            double nextVal = minerals.get(i).noise.eval(x / SCALE, y / SCALE);
+            double nextVal = minerals.get(i).noise.eval(x / MINERAL_SCALE, y / MINERAL_SCALE);
             if (nextVal > val) {
                 index = i;
                 val = nextVal;

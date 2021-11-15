@@ -2,9 +2,11 @@ package github.elmartino4.guncorp.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import github.elmartino4.guncorp.GameData;
 
@@ -12,6 +14,7 @@ public class MyCorpScreen extends AbstractScreen{
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     BitmapFont font;
+    GlyphLayout layout;
 
     public MyCorpScreen(GameData data) {
         super(data);
@@ -21,9 +24,11 @@ public class MyCorpScreen extends AbstractScreen{
     public void create() {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 32;
+        parameter.size = 50;
 
         font = generator.generateFont(parameter);
+
+        layout = new GlyphLayout();
     }
 
     @Override
@@ -32,7 +37,8 @@ public class MyCorpScreen extends AbstractScreen{
 
         super.data.batch.begin();
 
-        font.draw(super.data.batch, "fish", 50, Gdx.graphics.getHeight() - 200);
+        font.draw(super.data.batch, "fish", Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() - 200,
+                0, Align.center, false);
 
         super.data.batch.end();
     }

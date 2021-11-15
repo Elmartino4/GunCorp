@@ -22,15 +22,9 @@ public class GameData {
         this.menuDataConsumer = menuDataConsumer;
     }
 
-    public void renderMenu () {
-        if(currentMenu != -1) menus[currentMenu].render();
-    }
-
     public void setCurrentMenu (int val) {
-        if (val != currentMenu) {
-            if (currentMenu != -1) menus[currentMenu].hide();
-            if (val != -1) menus[val].show();
-        }
+        if (currentMenu != -1) menus[currentMenu].hide();
+        if (val != -1) menus[val].show();
 
         currentMenu = val;
     }

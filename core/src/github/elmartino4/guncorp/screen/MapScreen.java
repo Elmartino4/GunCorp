@@ -3,7 +3,11 @@ package github.elmartino4.guncorp.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import github.elmartino4.guncorp.GameData;
 import github.elmartino4.guncorp.map.MapData;
 import github.elmartino4.guncorp.map.SafeElement;
@@ -17,14 +21,30 @@ public class MapScreen extends AbstractScreen {
     private static final float MIN_VELOCITY = 2.5F;
     private static final int EDGE = 160;
     private static final int GRID = 48;
-    private static final float MAP_SIZE = 40;
+    private static final float MAP_SIZE = 60;
 
     private final float[] pos = new float[2];
     private final float[] velocity = new float[2];
     public final MapData mapData = new MapData(4269);
 
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    BitmapFont font;
+    GlyphLayout layout;
+
     public MapScreen(GameData gameData) {
         super(gameData);
+    }
+
+    @Override
+    public void create() {
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 20;
+
+        font = generator.generateFont(parameter);
+
+        layout = new GlyphLayout();
     }
 
     @Override
@@ -57,10 +77,10 @@ public class MapScreen extends AbstractScreen {
             } else {
                 velocity[1] = 0;
             }
+        }
 
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
-                setMenu(1);
-            }
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && super.data.getCurrentMenu() != 0) {
+            setMenu(1);
         }
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && super.data.getCurrentMenu() == 1) {
@@ -75,9 +95,9 @@ public class MapScreen extends AbstractScreen {
 
         pos[1] += velocity[1] * Gdx.graphics.getDeltaTime();
 
-        pos[0] = Math.max(Math.min(pos[0], MAP_SIZE), -MAP_SIZE);
+        pos[0] = Math.max(Math.min(pos[0], MAP_SIZE - Gdx.graphics.getWidth() / (float)GRID), -MAP_SIZE);
 
-        pos[1] = Math.max(Math.min(pos[1], MAP_SIZE), -MAP_SIZE);
+        pos[1] = Math.max(Math.min(pos[1], MAP_SIZE - Gdx.graphics.getHeight() / (float)GRID), -MAP_SIZE);
 
         super.data.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -90,12 +110,22 @@ public class MapScreen extends AbstractScreen {
         }
 
         super.data.shapeRenderer.end();
+
+        super.data.batch.begin();
+
+        int[] mousePos = mouseToGrid();
+
+        if (super.data.getCurrentMenu() == -1)
+            font.draw(super.data.batch, String.format("Current [%.1f, %.1f]\nMouse [%d, %d]", pos[0], pos[1], mousePos[0], mousePos[1]), Gdx.graphics.getWidth() - 20, Gdx.graphics.getHeight() - 20,
+                0, Align.right, false);
+
+        super.data.batch.end();
     }
 
     @Override
-    public String getDebugText() {
-        String out = String.format("Pos: %.1f, %.1f", pos[0], pos[1]);
-        return out;
+    public void dispose() {
+        generator.dispose();
+        font.dispose();
     }
 
     private void setMenu(int menu) {
@@ -111,7 +141,7 @@ public class MapScreen extends AbstractScreen {
             data.add(new ContextMenuData.SimpleSubSection(name));
 
             for (Map.Entry<SafeElement, Float> entry : mapData.getData(gridPos[0], gridPos[1]).entrySet()) {
-                data.add(new ContextMenuData.SimpleSubSection(entry.toString()));
+                data.add(new ContextMenuData.SimpleSubSection(String.format("%s %.1f%%", entry.getKey().toString(), entry.getValue() * 100)));
             }
         }
 
