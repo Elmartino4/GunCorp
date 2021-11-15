@@ -45,6 +45,9 @@ public class MapScreen extends AbstractScreen {
         font = generator.generateFont(parameter);
 
         layout = new GlyphLayout();
+
+        pos[0] = -Gdx.graphics.getWidth() / (float)GRID / 2F;
+        pos[1] = -Gdx.graphics.getHeight() / (float)GRID / 2F;
     }
 
     @Override
