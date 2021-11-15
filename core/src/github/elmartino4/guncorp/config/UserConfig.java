@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp;
+package github.elmartino4.guncorp.config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -8,7 +8,7 @@ public class UserConfig {
     static public ConfigChangeCallback configChangeCallback;
 
     static public void generate() {
-        prefs = Gdx.app.getPreferences("github.elmartino4.guncorp.UserConfig");
+        prefs = Gdx.app.getPreferences("github.elmartino4.guncorp.config.UserConfig");
 
         if (prefs.contains("width") || prefs.contains("height")) {
             Gdx.graphics.setWindowedMode(prefs.getInteger("width", (int) configChangeCallback.getConfig("width")),
