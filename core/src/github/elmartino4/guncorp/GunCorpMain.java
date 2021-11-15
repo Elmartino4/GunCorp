@@ -22,13 +22,7 @@ import github.elmartino4.guncorp.screen.AbstractScreen;
 import github.elmartino4.guncorp.screen.MyCorpScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
-    FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-    BitmapFont font;
-
     public GameData gameData = new GameData(this::onMenuData);
-
-    private float fps = 60;
 
     private int titleTimer = 0;
 
@@ -48,15 +42,8 @@ public class GunCorpMain extends ApplicationAdapter {
 
     @Override
     public void create() {
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ShareTechMono-Regular.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 32;
-
         this.gameData.batch = new SpriteBatch();
         this.gameData.shapeRenderer = new ShapeRenderer();
-
-        font = generator.generateFont(parameter);
-
 
         //Camera
         this.gameData.camera = new OrthographicCamera();
@@ -76,11 +63,9 @@ public class GunCorpMain extends ApplicationAdapter {
 
     @Override
     public void render() {
-        fps *= 0.99;
-        fps += 1D / Gdx.graphics.getDeltaTime() * 0.01;
         if (titleTimer < 0) {
-            Gdx.graphics.setTitle(String.format("GunCorp - %.2ffps\n", fps));
-            titleTimer = (int)(fps / 2F);
+            Gdx.graphics.setTitle(String.format("GunCorp - %dfps\n", Gdx.graphics.getFramesPerSecond()));
+            titleTimer = (int)(Math.min(Gdx.graphics.getFramesPerSecond() / 2F, 1000));
         } else {
             titleTimer--;
         }
@@ -92,22 +77,12 @@ public class GunCorpMain extends ApplicationAdapter {
 
         if (gameData.getCurrentMenu() != -1)
             gameData.menus[gameData.getCurrentMenu()].render();
-
-        this.gameData.batch.begin();
-
-        //text += SCREENS[currentScreen].getDebugText();
-        //font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
-
-
-        this.gameData.batch.end();
     }
 
     @Override
     public void dispose() {
         this.gameData.batch.dispose();
         this.gameData.shapeRenderer.dispose();
-        font.dispose();
-        generator.dispose();
     }
 
     @Override

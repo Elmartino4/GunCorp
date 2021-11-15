@@ -3,20 +3,23 @@ package github.elmartino4.guncorp.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.GunCorpMain;
 import github.elmartino4.guncorp.config.ReflectionUtil;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		// UserConfig.generate();
-		config.title = "GunCorp";
-		config.width = 1500;
-		config.height = 800;
-		config.foregroundFPS = 0;
-		config.vSyncEnabled = false;
-		new LwjglApplication(new GunCorpMain(new ConfigChangeCallback() {
+		config.setTitle("GunCorp");
+		config.setWindowedMode(1500, 800);
+		config.setWindowSizeLimits(1150, 430, Integer.MAX_VALUE / 2, Integer.MAX_VALUE / 2);
+		config.setForegroundFPS(0);
+		config.useVsync(false);
+
+		new Lwjgl3Application(new GunCorpMain(new ConfigChangeCallback() {
 			@Override
 			public <T> T getConfig(String key) {
 				try {
