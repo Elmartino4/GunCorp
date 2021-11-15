@@ -19,6 +19,7 @@ import github.elmartino4.guncorp.menu.AreaMenu;
 import github.elmartino4.guncorp.menu.EscapeMenu;
 import github.elmartino4.guncorp.menu.MenuData;
 import github.elmartino4.guncorp.screen.AbstractScreen;
+import github.elmartino4.guncorp.screen.MyCorpScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
     FreeTypeFontGenerator generator;
@@ -29,11 +30,14 @@ public class GunCorpMain extends ApplicationAdapter {
 
     private float fps = 60;
 
+    private int titleTimer = 0;
+
 	public int currentScreen = 0;
 
 	private final AbstractScreen[] SCREENS = {
 			new MapScreen(gameData),
-            new CorpopediaScreen(gameData)
+            new CorpopediaScreen(gameData),
+            new MyCorpScreen(gameData)
 	};
 
 	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
@@ -74,20 +78,25 @@ public class GunCorpMain extends ApplicationAdapter {
     public void render() {
         fps *= 0.99;
         fps += 1D / Gdx.graphics.getDeltaTime() * 0.01;
-        String text = String.format("%.2f FPS\n", fps);
+        if (titleTimer < 0) {
+            Gdx.graphics.setTitle(String.format("GunCorp - %.2ffps\n", fps));
+            titleTimer = (int)(fps / 2F);
+        } else {
+            titleTimer--;
+        }
+
 
         ScreenUtils.clear(1, 0, 0, 1);
 
         SCREENS[currentScreen].render();
-
-        text += SCREENS[currentScreen].getDebugText();
 
         if (gameData.getCurrentMenu() != -1)
             gameData.menus[gameData.getCurrentMenu()].render();
 
         this.gameData.batch.begin();
 
-        font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
+        //text += SCREENS[currentScreen].getDebugText();
+        //font.draw(this.gameData.batch, text, 10, Gdx.graphics.getHeight() - 10);
 
 
         this.gameData.batch.end();
@@ -116,7 +125,7 @@ public class GunCorpMain extends ApplicationAdapter {
     public void onMenuData(MenuData data) {
         if (data.equals(MenuData.QUIT)) Gdx.app.exit();
         if (data.equals(MenuData.PEDIA)) setScreen(1);
-        if (data.equals(MenuData.MY_CORP)) Gdx.app.exit();
+        if (data.equals(MenuData.MY_CORP)) setScreen(2);
     }
 
     public void setScreen(int screen) {
