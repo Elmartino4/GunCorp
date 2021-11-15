@@ -55,10 +55,11 @@ public class GunCorpMain extends ApplicationAdapter {
             screen.create();
         }
 
-
         for (AbstractMenu menu : gameData.menus) {
             menu.create();
         }
+
+        UserConfig.generate();
     }
 
     @Override
