@@ -5,16 +5,17 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.GunCorpMain;
 import github.elmartino4.guncorp.config.ReflectionUtil;
+import github.elmartino4.guncorp.config.UserConfig;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		// UserConfig.generate();
 		config.setTitle("GunCorp");
-		config.setWindowedMode(1500, 800);
+		config.setWindowedMode(UserConfig.DEFAULT_WIDTH, UserConfig.DEFAULT_HEIGHT);
 		config.setWindowSizeLimits(1150, 430, Integer.MAX_VALUE / 2, Integer.MAX_VALUE / 2);
-		config.setForegroundFPS(0);
-		config.useVsync(false);
+		// config.setForegroundFPS(0);
+		// config.useVsync(false);
 
 		new Lwjgl3Application(new GunCorpMain(new ConfigChangeCallback() {
 			@Override

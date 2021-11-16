@@ -1,7 +1,6 @@
 package github.elmartino4.guncorp.menu;
 
 import github.elmartino4.guncorp.GameData;
-import github.elmartino4.guncorp.screen.AbstractScreen;
 
 public abstract class AbstractMenu {
     protected GameData data;

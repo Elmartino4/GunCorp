@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.MenuData;
+import github.elmartino4.guncorp.screen.AbstractScreen;
 
 import java.util.function.Consumer;
 
@@ -15,7 +16,9 @@ public class GameData {
     public OrthographicCamera camera;
     public ExtendViewport viewport;
     public AbstractMenu[] menus;
+    public AbstractScreen[] screens;
     protected int currentMenu = -1;
+    protected int currentScreen = 0;
     public Consumer<MenuData> menuDataConsumer;
 
     public GameData (Consumer<MenuData> menuDataConsumer) {
@@ -31,6 +34,19 @@ public class GameData {
 
     public int getCurrentMenu () {
         return currentMenu;
+    }
+
+    public void setCurrentScreen(int currentScreen, boolean closeMenus) {
+        if (closeMenus) setCurrentMenu(-1);
+
+        if (this.currentScreen != -1) screens[this.currentScreen].hide();
+        if (currentScreen != -1) screens[currentScreen].show();
+
+        this.currentScreen = currentScreen;
+    }
+
+    public int getCurrentScreen() {
+        return currentScreen;
     }
 
     public void onClick (MenuData menuData) {

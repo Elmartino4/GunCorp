@@ -26,17 +26,13 @@ public class GunCorpMain extends ApplicationAdapter {
 
     private int titleTimer = 0;
 
-	public int currentScreen = 0;
-
-	private final AbstractScreen[] SCREENS = {
-			new MapScreen(gameData),
-            new CorpopediaScreen(gameData),
-            new MyCorpScreen(gameData)
-	};
-
 	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
 		this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
-
+        this.gameData.screens = new AbstractScreen[] {
+                new MapScreen(gameData),
+                new CorpopediaScreen(gameData),
+                new MyCorpScreen(gameData)
+        };
 		UserConfig.configChangeCallback = configChangeCallback;
 	}
 
@@ -51,7 +47,7 @@ public class GunCorpMain extends ApplicationAdapter {
         //Viewport
         this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
 
-        for (AbstractScreen screen : SCREENS) {
+        for (AbstractScreen screen : gameData.screens) {
             screen.create();
         }
 
@@ -74,7 +70,7 @@ public class GunCorpMain extends ApplicationAdapter {
 
         ScreenUtils.clear(1, 0, 0, 1);
 
-        SCREENS[currentScreen].render();
+        gameData.screens[gameData.getCurrentScreen()].render();
 
         if (gameData.getCurrentMenu() != -1)
             gameData.menus[gameData.getCurrentMenu()].render();
@@ -84,6 +80,13 @@ public class GunCorpMain extends ApplicationAdapter {
     public void dispose() {
         this.gameData.batch.dispose();
         this.gameData.shapeRenderer.dispose();
+        for (AbstractMenu menu : gameData.menus) {
+            menu.dispose();
+        }
+
+        for (AbstractScreen screen : gameData.screens) {
+            screen.dispose();
+        }
     }
 
     @Override
@@ -100,13 +103,7 @@ public class GunCorpMain extends ApplicationAdapter {
 
     public void onMenuData(MenuData data) {
         if (data.equals(MenuData.QUIT)) Gdx.app.exit();
-        if (data.equals(MenuData.PEDIA)) setScreen(1);
-        if (data.equals(MenuData.MY_CORP)) setScreen(2);
-    }
-
-    public void setScreen(int screen) {
-        gameData.setCurrentMenu(-1);
-        SCREENS[currentScreen].dispose();
-        currentScreen = screen;
+        if (data.equals(MenuData.PEDIA)) gameData.setCurrentScreen(1, true);
+        if (data.equals(MenuData.MY_CORP)) gameData.setCurrentScreen(2, true);
     }
 }
