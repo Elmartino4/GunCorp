@@ -1,5 +1,7 @@
 package github.elmartino4.guncorp.screen;
 
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -8,13 +10,13 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
+
 import github.elmartino4.guncorp.GameData;
+import github.elmartino4.guncorp.config.UserConfig;
 import github.elmartino4.guncorp.map.MapData;
 import github.elmartino4.guncorp.map.SafeElement;
 import github.elmartino4.guncorp.menu.AreaMenu;
 import github.elmartino4.guncorp.menu.ContextMenuData;
-
-import java.util.Map;
 
 public class MapScreen extends AbstractScreen {
     private static final float ACCELERATION = 20F;
@@ -46,8 +48,8 @@ public class MapScreen extends AbstractScreen {
 
         layout = new GlyphLayout();
 
-        pos[0] = -Gdx.graphics.getWidth() / (float)GRID / 2F;
-        pos[1] = -Gdx.graphics.getHeight() / (float)GRID / 2F;
+        pos[0] = -Gdx.graphics.getWidth() / (float) GRID / 2F;
+        pos[1] = -Gdx.graphics.getHeight() / (float) GRID / 2F;
     }
 
     @Override
@@ -98,17 +100,17 @@ public class MapScreen extends AbstractScreen {
 
         pos[1] += velocity[1] * Gdx.graphics.getDeltaTime();
 
-        pos[0] = Math.max(Math.min(pos[0], MAP_SIZE - Gdx.graphics.getWidth() / (float)GRID), -MAP_SIZE);
+        pos[0] = Math.max(Math.min(pos[0], MAP_SIZE - Gdx.graphics.getWidth() / (float) GRID), -MAP_SIZE);
 
-        pos[1] = Math.max(Math.min(pos[1], MAP_SIZE - Gdx.graphics.getHeight() / (float)GRID), -MAP_SIZE);
+        pos[1] = Math.max(Math.min(pos[1], MAP_SIZE - Gdx.graphics.getHeight() / (float) GRID), -MAP_SIZE);
 
         super.data.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (int x = -1; x <= Gdx.graphics.getWidth() / GRID + 1; x++) {
             for (int y = -1; y <= Gdx.graphics.getHeight() / GRID + 1; y++) {
                 Color color = mapData.getColor(x + (int) pos[0], y + (int) pos[1]);
-                super.data.shapeRenderer.rect((x - pos[0] % 1) * GRID, (y - pos[1] % 1) * GRID, GRID, GRID, color, color, color,
-                        color);
+                super.data.shapeRenderer.rect((x - pos[0] % 1) * GRID, (y - pos[1] % 1) * GRID, GRID, GRID, color,
+                        color, color, color);
             }
         }
 
@@ -118,9 +120,10 @@ public class MapScreen extends AbstractScreen {
 
         int[] mousePos = mouseToGrid();
 
-        if (super.data.getCurrentMenu() == -1)
-            font.draw(super.data.batch, String.format("Current [%.1f, %.1f]\nMouse [%d, %d]", pos[0], pos[1], mousePos[0], mousePos[1]), Gdx.graphics.getWidth() - 20, Gdx.graphics.getHeight() - 20,
-                0, Align.right, false);
+        if (super.data.getCurrentMenu() == -1 && UserConfig.prefs.getBoolean("debug"))
+            font.draw(super.data.batch,
+                    String.format("Current [%.1f, %.1f]\nMouse [%d, %d]", pos[0], pos[1], mousePos[0], mousePos[1]),
+                    Gdx.graphics.getWidth() - 20, Gdx.graphics.getHeight() - 20, 0, Align.right, false);
 
         super.data.batch.end();
     }
@@ -144,7 +147,8 @@ public class MapScreen extends AbstractScreen {
             data.add(new ContextMenuData.SimpleSubSection(name));
 
             for (Map.Entry<SafeElement, Float> entry : mapData.getData(gridPos[0], gridPos[1]).entrySet()) {
-                data.add(new ContextMenuData.SimpleSubSection(String.format("%s %.1f%%", entry.getKey().toString(), entry.getValue() * 100)));
+                data.add(new ContextMenuData.SimpleSubSection(
+                        String.format("%s %.1f%%", entry.getKey().toString(), entry.getValue() * 100)));
             }
         }
 
@@ -155,9 +159,7 @@ public class MapScreen extends AbstractScreen {
     }
 
     private int[] mouseToGrid() {
-        return new int[]{
-                (Gdx.input.getX() + (int) ((pos[0] * GRID) % GRID)) / GRID + (int) pos[0],
-                (Gdx.graphics.getHeight() - Gdx.input.getY() + (int) ((pos[1] * GRID) % GRID)) / GRID + (int) pos[1]
-        };
+        return new int[] { (Gdx.input.getX() + (int) ((pos[0] * GRID) % GRID)) / GRID + (int) pos[0],
+                (Gdx.graphics.getHeight() - Gdx.input.getY() + (int) ((pos[1] * GRID) % GRID)) / GRID + (int) pos[1] };
     }
 }

@@ -3,22 +3,20 @@ package github.elmartino4.guncorp;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.config.UserConfig;
-import github.elmartino4.guncorp.screen.CorpopediaScreen;
-import github.elmartino4.guncorp.screen.MapScreen;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.AreaMenu;
 import github.elmartino4.guncorp.menu.EscapeMenu;
 import github.elmartino4.guncorp.menu.MenuData;
 import github.elmartino4.guncorp.screen.AbstractScreen;
+import github.elmartino4.guncorp.screen.CorpopediaScreen;
+import github.elmartino4.guncorp.screen.MapScreen;
 import github.elmartino4.guncorp.screen.MyCorpScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
@@ -26,25 +24,22 @@ public class GunCorpMain extends ApplicationAdapter {
 
     private int titleTimer = 0;
 
-	public GunCorpMain(ConfigChangeCallback configChangeCallback) {
-		this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
-        this.gameData.screens = new AbstractScreen[] {
-                new MapScreen(gameData),
-                new CorpopediaScreen(gameData),
-                new MyCorpScreen(gameData)
-        };
-		UserConfig.configChangeCallback = configChangeCallback;
-	}
+    public GunCorpMain(ConfigChangeCallback configChangeCallback) {
+        this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
+        this.gameData.screens = new AbstractScreen[] { new MapScreen(gameData), new CorpopediaScreen(gameData),
+                new MyCorpScreen(gameData) };
+        UserConfig.configChangeCallback = configChangeCallback;
+    }
 
     @Override
     public void create() {
         this.gameData.batch = new SpriteBatch();
         this.gameData.shapeRenderer = new ShapeRenderer();
 
-        //Camera
+        // Camera
         this.gameData.camera = new OrthographicCamera();
 
-        //Viewport
+        // Viewport
         this.gameData.viewport = new ExtendViewport(1500, 800, this.gameData.camera);
 
         for (AbstractScreen screen : gameData.screens) {
@@ -61,12 +56,13 @@ public class GunCorpMain extends ApplicationAdapter {
     @Override
     public void render() {
         if (titleTimer < 0) {
-            Gdx.graphics.setTitle(String.format("GunCorp - %dfps\n", Gdx.graphics.getFramesPerSecond()));
-            titleTimer = (int)(Math.min(Gdx.graphics.getFramesPerSecond() / 2F, 1000));
+            if (UserConfig.prefs.getBoolean("debug")) {
+                Gdx.graphics.setTitle(String.format("GunCorp - %dfps\n", Gdx.graphics.getFramesPerSecond()));
+            }
+            titleTimer = (int) (Math.min(Gdx.graphics.getFramesPerSecond() / 2F, 1000));
         } else {
             titleTimer--;
         }
-
 
         ScreenUtils.clear(1, 0, 0, 1);
 
@@ -98,12 +94,16 @@ public class GunCorpMain extends ApplicationAdapter {
         this.gameData.batch.setProjectionMatrix(this.gameData.camera.combined);
         this.gameData.shapeRenderer.setProjectionMatrix(this.gameData.camera.combined);
 
-        if (this.gameData.getCurrentMenu() == 1) this.gameData.setCurrentMenu(-1);
+        if (this.gameData.getCurrentMenu() == 1)
+            this.gameData.setCurrentMenu(-1);
     }
 
     public void onMenuData(MenuData data) {
-        if (data.equals(MenuData.QUIT)) Gdx.app.exit();
-        if (data.equals(MenuData.PEDIA)) gameData.setCurrentScreen(1, true);
-        if (data.equals(MenuData.MY_CORP)) gameData.setCurrentScreen(2, true);
+        if (data.equals(MenuData.QUIT))
+            Gdx.app.exit();
+        if (data.equals(MenuData.PEDIA))
+            gameData.setCurrentScreen(1, true);
+        if (data.equals(MenuData.MY_CORP))
+            gameData.setCurrentScreen(2, true);
     }
 }
