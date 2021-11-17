@@ -3,7 +3,6 @@ package github.elmartino4.guncorp.screen;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 
 import github.elmartino4.guncorp.GameData;
+import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
 import github.elmartino4.guncorp.map.MapData;
 import github.elmartino4.guncorp.map.SafeElement;
@@ -55,13 +55,13 @@ public class MapScreen extends AbstractScreen {
     @Override
     public void render() {
         if (super.data.getCurrentMenu() == -1) {
-            if (Gdx.input.getX() < EDGE || Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                    || Gdx.input.isKeyPressed(Input.Keys.A)) {
+            boolean isMouse = Keybindings.kb.getBoolean("Autoscrolling mouse");
+            if (Gdx.input.getX() < EDGE && isMouse || Keybindings.isKeyPressed("Left")) {
                 if (velocity[0] > -MIN_VELOCITY)
                     velocity[0] = -MIN_VELOCITY;
                 velocity[0] -= ACCELERATION * Gdx.graphics.getDeltaTime();
-            } else if (Gdx.input.getX() > Gdx.graphics.getWidth() - EDGE || Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                    || Gdx.input.isKeyPressed(Input.Keys.D)) {
+            } else if (Gdx.input.getX() > Gdx.graphics.getWidth() - EDGE && isMouse
+                    || Keybindings.isKeyPressed("Right")) {
                 if (velocity[0] < MIN_VELOCITY)
                     velocity[0] = MIN_VELOCITY;
                 velocity[0] += ACCELERATION * Gdx.graphics.getDeltaTime();
@@ -69,13 +69,11 @@ public class MapScreen extends AbstractScreen {
                 velocity[0] = 0;
             }
 
-            if (Gdx.input.getY() > Gdx.graphics.getHeight() - EDGE || Gdx.input.isKeyPressed(Input.Keys.DOWN)
-                    || Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (Gdx.input.getY() > Gdx.graphics.getHeight() - EDGE && isMouse || Keybindings.isKeyPressed("Down")) {
                 if (velocity[1] > -MIN_VELOCITY)
                     velocity[1] = -MIN_VELOCITY;
                 velocity[1] -= ACCELERATION * Gdx.graphics.getDeltaTime();
-            } else if (Gdx.input.getY() < EDGE || Gdx.input.isKeyPressed(Input.Keys.UP)
-                    || Gdx.input.isKeyPressed(Input.Keys.W)) {
+            } else if (Gdx.input.getY() < EDGE && isMouse|| Keybindings.isKeyPressed("Up"))) {
                 if (velocity[1] < MIN_VELOCITY)
                     velocity[1] = MIN_VELOCITY;
                 velocity[1] += ACCELERATION * Gdx.graphics.getDeltaTime();
@@ -84,15 +82,15 @@ public class MapScreen extends AbstractScreen {
             }
         }
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && super.data.getCurrentMenu() != 0) {
+        if (Keybindings.isKeyJustPressed("Go to right menu") && super.data.getCurrentMenu() != 0) {
             setMenu(1);
         }
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && super.data.getCurrentMenu() == 1) {
+        if (Keybindings.isKeyJustPressed("Go to left menu") && super.data.getCurrentMenu() == 1) {
             setMenu(-1);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Keybindings.isKeyJustPressed("Exit menu")) {
             setMenu((super.data.getCurrentMenu() != -1) ? -1 : 0);
         }
 

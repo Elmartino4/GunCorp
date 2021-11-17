@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
+import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.AreaMenu;
@@ -62,6 +63,16 @@ public class GunCorpMain extends ApplicationAdapter {
             titleTimer = (int) (Math.min(Gdx.graphics.getFramesPerSecond() / 2F, 1000));
         } else {
             titleTimer--;
+        }
+
+        if (Keybindings.isKeyJustPressed("Debug")) {
+            UserConfig.prefs.putBoolean("debug", !UserConfig.prefs.getBoolean("debug"));
+            UserConfig.prefs.flush();
+            if (!UserConfig.prefs.getBoolean("debug")) {
+                Gdx.graphics.setTitle("GunCorp");
+            } else {
+                Gdx.graphics.setTitle(String.format("GunCorp - %dfps\n", Gdx.graphics.getFramesPerSecond()));
+            }
         }
 
         ScreenUtils.clear(1, 0, 0, 1);
