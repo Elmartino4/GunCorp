@@ -51,7 +51,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
 
         // removed due to incompatibility with lwjgl3
-        // api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        //api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         
     }
 }
