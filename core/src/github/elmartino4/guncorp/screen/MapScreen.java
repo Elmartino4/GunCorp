@@ -73,7 +73,7 @@ public class MapScreen extends AbstractScreen {
                 if (velocity[1] > -MIN_VELOCITY)
                     velocity[1] = -MIN_VELOCITY;
                 velocity[1] -= ACCELERATION * Gdx.graphics.getDeltaTime();
-            } else if (Gdx.input.getY() < EDGE && isMouse|| Keybindings.isKeyPressed("Up"))) {
+            } else if (Gdx.input.getY() < EDGE && isMouse|| Keybindings.isKeyPressed("Up")) {
                 if (velocity[1] < MIN_VELOCITY)
                     velocity[1] = MIN_VELOCITY;
                 velocity[1] += ACCELERATION * Gdx.graphics.getDeltaTime();

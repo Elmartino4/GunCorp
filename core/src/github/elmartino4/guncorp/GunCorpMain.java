@@ -21,6 +21,8 @@ import github.elmartino4.guncorp.screen.CorpopediaScreen;
 import github.elmartino4.guncorp.screen.MapScreen;
 import github.elmartino4.guncorp.screen.MyCorpScreen;
 
+import java.io.IOException;
+
 public class GunCorpMain extends ApplicationAdapter {
     public GameData gameData = new GameData(this::onMenuData);
 
@@ -53,6 +55,13 @@ public class GunCorpMain extends ApplicationAdapter {
         }
 
         UserConfig.generate();
+        Keybindings.generate();
+
+        try {
+            this.gameData.saveFile.begin();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package github.elmartino4.guncorp.save;
 
+import com.badlogic.gdx.Gdx;
 import github.elmartino4.guncorp.config.UserConfig;
 import org.json.JSONObject;
 
@@ -14,7 +15,12 @@ public class SaveFile {
     }
 
     public void begin() throws IOException, ClassNotFoundException {
-        File save = new File(UserConfig.prefs.getString("saveDir", "./") + fileName);
+        String fileDir = UserConfig.prefs.getString("saveDir", "./save/") + fileName;
+
+        File save = new File(fileDir);
+
+        save.getParentFile().mkdirs();
+
         if (!save.exists()) {
             save.createNewFile();
         } else {
