@@ -3,11 +3,14 @@ package github.elmartino4.guncorp;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import github.elmartino4.guncorp.menu.AbstractMenu;
 import github.elmartino4.guncorp.menu.MenuData;
+import github.elmartino4.guncorp.save.SaveFile;
 import github.elmartino4.guncorp.screen.AbstractScreen;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 public class GameData {
@@ -20,19 +23,26 @@ public class GameData {
     protected int currentMenu = -1;
     protected int currentScreen = 0;
     public Consumer<MenuData> menuDataConsumer;
+    public SaveFile saveFile;
 
-    public GameData (Consumer<MenuData> menuDataConsumer) {
+    public GameData(Consumer<MenuData> menuDataConsumer) {
         this.menuDataConsumer = menuDataConsumer;
+        this.saveFile = new SaveFile("save.dat");
+        try {
+            this.saveFile.begin();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setCurrentMenu (int val) {
+    public void setCurrentMenu(int val) {
         if (currentMenu != -1) menus[currentMenu].hide();
         if (val != -1) menus[val].show();
 
         currentMenu = val;
     }
 
-    public int getCurrentMenu () {
+    public int getCurrentMenu() {
         return currentMenu;
     }
 
@@ -49,7 +59,7 @@ public class GameData {
         return currentScreen;
     }
 
-    public void onClick (MenuData menuData) {
+    public void onClick(MenuData menuData) {
         menuDataConsumer.accept(menuData);
     }
 }

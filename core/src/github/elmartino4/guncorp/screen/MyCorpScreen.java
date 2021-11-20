@@ -37,7 +37,7 @@ public class MyCorpScreen extends AbstractScreen{
 
         super.data.batch.begin();
 
-        font.draw(super.data.batch, "fish", Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() - 200,
+        font.draw(super.data.batch, "fish", Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() - 80,
                 0, Align.center, false);
 
         super.data.batch.end();
