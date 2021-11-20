@@ -1,6 +1,7 @@
 package github.elmartino4.guncorp.save;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import github.elmartino4.guncorp.config.UserConfig;
 import org.json.JSONObject;
 
@@ -8,7 +9,8 @@ import java.io.*;
 
 public class SaveFile {
     String fileName;
-    public JSONObject saveData;
+    FileHandle save;
+    public JSONObject saveData = new JSONObject();
 
     public SaveFile(String fileName) {
         this.fileName = fileName;
@@ -17,35 +19,23 @@ public class SaveFile {
     public void begin() throws IOException, ClassNotFoundException {
         String fileDir = UserConfig.prefs.getString("saveDir", "./save/") + fileName;
 
-        File save = new File(fileDir);
+        this.save = Gdx.files.internal(fileDir);
 
-        save.getParentFile().mkdirs();
+        if (!save.exists()) return;
+        if (save.read().available() == 0) return;
 
-        if (!save.exists()) {
-            save.createNewFile();
-        } else {
-            FileInputStream fis = new FileInputStream(save);
+        ObjectInputStream ois = new ObjectInputStream(save.read());
 
-            ObjectInputStream ois = new ObjectInputStream(fis);
+        saveData = (JSONObject) ois.readObject();
 
-            saveData = (JSONObject) ois.readObject();
-
-            ois.close();
-            fis.close();
-        }
+        ois.close();
     }
 
     public void save() throws IOException {
-        File save = new File(UserConfig.prefs.getString("saveDir", "./") + fileName);
-        save.delete();
-        save.createNewFile();
-
-        FileOutputStream fos = new FileOutputStream(save);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(save.write(false));
 
         oos.writeObject(saveData);
 
         oos.close();
-        fos.close();
     }
 }
