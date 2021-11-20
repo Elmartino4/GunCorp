@@ -52,6 +52,7 @@ public class GunCorpMain extends ApplicationAdapter {
         }
 
         UserConfig.generate();
+        Keybindings.generate();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class GunCorpMain extends ApplicationAdapter {
             titleTimer--;
         }
 
-        if (Keybindings.isKeyJustPressed("Debug")) {
+        if (Keybindings.isKeyJustPressed("Toggle debug")) {
             UserConfig.prefs.putBoolean("debug", !UserConfig.prefs.getBoolean("debug"));
             UserConfig.prefs.flush();
             if (!UserConfig.prefs.getBoolean("debug")) {

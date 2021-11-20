@@ -73,7 +73,7 @@ public class MapScreen extends AbstractScreen {
                 if (velocity[1] > -MIN_VELOCITY)
                     velocity[1] = -MIN_VELOCITY;
                 velocity[1] -= ACCELERATION * Gdx.graphics.getDeltaTime();
-            } else if (Gdx.input.getY() < EDGE && isMouse|| Keybindings.isKeyPressed("Up"))) {
+            } else if (Gdx.input.getY() < EDGE && isMouse || Keybindings.isKeyPressed("Up")) {
                 if (velocity[1] < MIN_VELOCITY)
                     velocity[1] = MIN_VELOCITY;
                 velocity[1] += ACCELERATION * Gdx.graphics.getDeltaTime();
@@ -82,11 +82,11 @@ public class MapScreen extends AbstractScreen {
             }
         }
 
-        if (Keybindings.isKeyJustPressed("Go to right menu") && super.data.getCurrentMenu() != 0) {
+        if (Keybindings.isKeyJustPressed("Enable right click menu") && super.data.getCurrentMenu() != 0) {
             setMenu(1);
         }
 
-        if (Keybindings.isKeyJustPressed("Go to left menu") && super.data.getCurrentMenu() == 1) {
+        if (Keybindings.isKeyJustPressed("Exit right click menu") && super.data.getCurrentMenu() == 1) {
             setMenu(-1);
         }
 
