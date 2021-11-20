@@ -28,11 +28,6 @@ public class GameData {
     public GameData(Consumer<MenuData> menuDataConsumer) {
         this.menuDataConsumer = menuDataConsumer;
         this.saveFile = new SaveFile("save.dat");
-        try {
-            this.saveFile.begin();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setCurrentMenu(int val) {
