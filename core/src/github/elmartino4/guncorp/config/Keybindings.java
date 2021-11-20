@@ -16,8 +16,8 @@ public class Keybindings {
             kb.putString("Down", "S, Down");
             kb.putString("Toggle debug", "F3");
             kb.putString("Exit menu", "Escape");
-            kb.putString("Go to left menu", "mousebutton_RIGHT");
-            kb.putString("Go to right menu", "mousebutton_LEFT");
+            kb.putString("Enable right click menu", "mousebutton_RIGHT");
+            kb.putString("Exit right click menu", "mousebutton_LEFT");
             kb.putBoolean("Autoscrolling mouse", true);
         }
         kb.flush();
@@ -33,7 +33,8 @@ public class Keybindings {
 
     private static boolean isKeyPressedGeneric(String name, boolean isRepeating) {
         if (!kb.contains(name)) {
-            throw new RuntimeException("Programming error: Action type " + name + " does not exist");
+            throw new RuntimeException("Programming error: Action type \"" + name
+                    + "\" does not exist. If you are a user try deleting your ~/.prefs/GunCorpKeybindings.xml");
         }
 
         for (String key : kb.getString(name).replaceAll("\\s", "").split(",")) {
@@ -45,7 +46,7 @@ public class Keybindings {
                 } catch (NoSuchFieldException | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
-                if (isRepeating ? Gdx.input.isButtonPressed(keycode) : Gdx.input.isKeyJustPressed(keycode)) {
+                if (isRepeating ? Gdx.input.isButtonPressed(keycode) : Gdx.input.isButtonJustPressed(keycode)) {
                     return true;
                 }
             } else {
