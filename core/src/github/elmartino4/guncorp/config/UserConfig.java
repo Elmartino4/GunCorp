@@ -32,6 +32,10 @@ public class UserConfig {
             prefs.putBoolean("vSyncEnabled", configChangeCallback.getConfig("vSyncEnabled"));
         }
 
+        if (!prefs.contains("debug")) {
+            prefs.putBoolean("debug", true);
+        }
+
         prefs.flush();
     }
 }

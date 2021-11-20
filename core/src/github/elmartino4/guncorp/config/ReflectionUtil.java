@@ -11,14 +11,18 @@ public class ReflectionUtil {
     /**
      * Gets the value of the field on the given object
      * 
-     * @param obj  the object with the field being examined
-     * @param name the name of the field in the object
-     * @param <    T > will return the field type w/o static casting
+     * @param obj
+     *            the object with the field being examined
+     * @param name
+     *            the name of the field in the object
+     * @param <
+     *            T > will return the field type w/o static casting
      * @return the field value
-     * @throws NoSuchFieldException   thrown if can't find field
-     * @throws IllegalAccessException thrown if the field isn't accessible
-     *                                (shouldn't be a problem w/
-     *                                setAccessible(true))
+     * @throws NoSuchFieldException
+     *             thrown if can't find field
+     * @throws IllegalAccessException
+     *             thrown if the field isn't accessible (shouldn't be a problem w/
+     *             setAccessible(true))
      */
     public static <T> T getFieldValue(Object obj, String name) throws NoSuchFieldException, IllegalAccessException {
         Field field = findField(obj.getClass(), name);
@@ -26,16 +30,27 @@ public class ReflectionUtil {
         return (T) field.get(obj);
     }
 
+    public static <T> T getStaticFieldValue(Class obj, String name)
+            throws NoSuchFieldException, IllegalAccessException {
+        Field field = findField(obj, name);
+        field.setAccessible(true);
+        return (T) field.get(obj);
+    }
+
     /**
      * Set the value of the field on a given object
      * 
-     * @param obj   the object with the field to set value on
-     * @param name  name of the field in the object
-     * @param value the value to set on the field
-     * @throws NoSuchFieldException   thrown if can't find the field
-     * @throws IllegalAccessException thrown if the field isn't accessible
-     *                                (shouldn't be a problem w/
-     *                                setAccessible(true))
+     * @param obj
+     *            the object with the field to set value on
+     * @param name
+     *            name of the field in the object
+     * @param value
+     *            the value to set on the field
+     * @throws NoSuchFieldException
+     *             thrown if can't find the field
+     * @throws IllegalAccessException
+     *             thrown if the field isn't accessible (shouldn't be a problem w/
+     *             setAccessible(true))
      */
     public static void setFieldValue(Object obj, String name, Object value)
             throws NoSuchFieldException, IllegalAccessException {
@@ -47,11 +62,14 @@ public class ReflectionUtil {
     /**
      * Helper method to find the field in the class
      * 
-     * @param clzz class type of the object
-     * @param name name of the field
+     * @param clzz
+     *            class type of the object
+     * @param name
+     *            name of the field
      * @return the java.lang.reflect.Field
-     * @throws NoSuchFieldException thrown if method recurses to java.lang.Object
-     *                              w/o finding the field by the given name
+     * @throws NoSuchFieldException
+     *             thrown if method recurses to java.lang.Object w/o finding the
+     *             field by the given name
      */
     static Field findField(Class clzz, String name) throws NoSuchFieldException {
         Field field = null;
