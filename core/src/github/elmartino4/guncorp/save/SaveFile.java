@@ -10,23 +10,23 @@ import java.io.*;
 public class SaveFile {
     String fileName;
     FileHandle save;
-    public JSONObject saveData = new JSONObject();
+    public SNBTObject saveData = new SNBTObject();
 
     public SaveFile(String fileName) {
         this.fileName = fileName;
     }
 
     public void begin() throws IOException, ClassNotFoundException {
-        String fileDir = UserConfig.prefs.getString("saveDir", "./save/") + fileName;
+        String fileDir = "./.gunCorp/" + UserConfig.prefs.getString("saveDir", "save/") + fileName;
 
-        this.save = Gdx.files.internal(fileDir);
+        this.save = Gdx.files.external(fileDir);
 
         if (!save.exists()) return;
         if (save.read().available() == 0) return;
 
         ObjectInputStream ois = new ObjectInputStream(save.read());
 
-        saveData = (JSONObject) ois.readObject();
+        saveData = ((SNBTObject) ois.readObject());
 
         ois.close();
     }
