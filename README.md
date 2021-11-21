@@ -76,3 +76,23 @@ Pressure (Outward force 0<x<∞) = True Density / Preferred Density
 ### Physics Data
  - Temperature
  - Density
+
+## Save Data Contents
+ - World Data
+ - Company Data
+   - owned schematics
+   - owned weapons
+   - wealth
+   - reputation
+   - weapons bought/sold
+   - materials bought/sold
+ - Government Data
+   - wealth (increases 10% pa)
+   - preference (reputation to value of purchase)
+   - Law enforcement and army details
+     - size
+     - weapon preference
+ - Schematics
+ - Weapons
+   - specs
+   - average sale price

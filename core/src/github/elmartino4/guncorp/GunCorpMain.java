@@ -59,14 +59,10 @@ public class GunCorpMain extends ApplicationAdapter {
 
         try {
             this.gameData.saveFile.begin();
-        } catch (IOException | ClassNotFoundException e) {
+            this.gameData.dataFile.begin();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("has value = " + this.gameData.saveFile.saveData.contains("testVal1"));
-
-        this.gameData.saveFile.saveData.put("testVal1", 2102);
-        this.gameData.saveFile.saveData.put("testVal2", "val2");
     }
 
     @Override
@@ -104,7 +100,8 @@ public class GunCorpMain extends ApplicationAdapter {
         this.gameData.shapeRenderer.dispose();
         try {
             this.gameData.saveFile.save();
-        } catch (IOException e) {
+            this.gameData.dataFile.save();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

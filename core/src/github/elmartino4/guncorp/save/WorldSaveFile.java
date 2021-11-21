@@ -7,12 +7,12 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-public class SaveFile {
+public class WorldSaveFile {
     String fileName;
     FileHandle save;
     public SNBTObject saveData = new SNBTObject();
 
-    public SaveFile(String fileName) {
+    public WorldSaveFile(String fileName) {
         this.fileName = fileName;
     }
 

@@ -66,5 +66,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         implementation 'org.json:json:20210307'
+        implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     }
 }
