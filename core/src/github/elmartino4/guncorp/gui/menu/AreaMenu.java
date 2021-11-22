@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.menu;
+package github.elmartino4.guncorp.gui.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

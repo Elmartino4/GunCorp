@@ -5,23 +5,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
-import github.elmartino4.guncorp.menu.AbstractMenu;
-import github.elmartino4.guncorp.menu.AreaMenu;
-import github.elmartino4.guncorp.menu.EscapeMenu;
-import github.elmartino4.guncorp.menu.MenuData;
-import github.elmartino4.guncorp.screen.AbstractScreen;
-import github.elmartino4.guncorp.screen.CorpopediaScreen;
-import github.elmartino4.guncorp.screen.MapScreen;
-import github.elmartino4.guncorp.screen.MyCorpScreen;
-
-import java.io.IOException;
+import github.elmartino4.guncorp.gui.menu.AbstractMenu;
+import github.elmartino4.guncorp.gui.menu.AreaMenu;
+import github.elmartino4.guncorp.gui.menu.EscapeMenu;
+import github.elmartino4.guncorp.gui.menu.MenuData;
+import github.elmartino4.guncorp.gui.screen.AbstractScreen;
+import github.elmartino4.guncorp.gui.screen.CorpopediaScreen;
+import github.elmartino4.guncorp.gui.screen.MapScreen;
+import github.elmartino4.guncorp.gui.screen.MyCorpScreen;
 
 public class GunCorpMain extends ApplicationAdapter {
     public GameData gameData = new GameData(this::onMenuData);

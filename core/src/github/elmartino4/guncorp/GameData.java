@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import github.elmartino4.guncorp.menu.AbstractMenu;
-import github.elmartino4.guncorp.menu.MenuData;
+import github.elmartino4.guncorp.gui.menu.AbstractMenu;
+import github.elmartino4.guncorp.gui.menu.MenuData;
 import github.elmartino4.guncorp.save.DataSaveFile;
 import github.elmartino4.guncorp.save.WorldSaveFile;
-import github.elmartino4.guncorp.screen.AbstractScreen;
+import github.elmartino4.guncorp.gui.screen.AbstractScreen;
 
 import java.util.function.Consumer;
 

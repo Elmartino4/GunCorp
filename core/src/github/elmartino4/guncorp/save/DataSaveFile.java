@@ -20,7 +20,7 @@ public class DataSaveFile {
         this.fileName = fileName;
     }
 
-    public void begin() throws IOException, SQLException {
+    public void begin() throws SQLException {
         String fileDir = "./.gunCorp/" + UserConfig.prefs.getString("saveDir", "save/") + fileName;
 
         this.save = Gdx.files.external(fileDir);
@@ -30,8 +30,6 @@ public class DataSaveFile {
         }
 
         conn = DriverManager.getConnection("jdbc:sqlite:" + this.save.file().getAbsolutePath());
-
-        System.out.println("created conn");
     }
 
     public void save() throws SQLException {

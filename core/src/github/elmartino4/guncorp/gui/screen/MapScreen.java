@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.screen;
+package github.elmartino4.guncorp.gui.screen;
 
 import java.util.Map;
 
@@ -15,8 +15,8 @@ import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
 import github.elmartino4.guncorp.map.MapData;
 import github.elmartino4.guncorp.map.SafeElement;
-import github.elmartino4.guncorp.menu.AreaMenu;
-import github.elmartino4.guncorp.menu.ContextMenuData;
+import github.elmartino4.guncorp.gui.menu.AreaMenu;
+import github.elmartino4.guncorp.gui.menu.ContextMenuData;
 
 public class MapScreen extends AbstractScreen {
     private static final float ACCELERATION = 20F;

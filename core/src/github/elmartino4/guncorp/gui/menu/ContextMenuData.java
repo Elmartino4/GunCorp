@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.menu;
+package github.elmartino4.guncorp.gui.menu;
 
 import java.util.ArrayList;
 import java.util.List;

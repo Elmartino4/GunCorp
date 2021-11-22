@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.screen;
+package github.elmartino4.guncorp.gui.screen;
 
 import github.elmartino4.guncorp.GameData;
 

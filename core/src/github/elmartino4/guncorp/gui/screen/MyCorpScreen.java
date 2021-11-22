@@ -1,4 +1,4 @@
-package github.elmartino4.guncorp.screen;
+package github.elmartino4.guncorp.gui.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import github.elmartino4.guncorp.GameData;
+import github.elmartino4.guncorp.config.Keybindings;
+import github.elmartino4.guncorp.corporation.CorpData;
 
 public class MyCorpScreen extends AbstractScreen{
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     BitmapFont font;
     GlyphLayout layout;
+    CorpData corpData;
 
     public MyCorpScreen(GameData data) {
         super(data);
@@ -27,16 +30,22 @@ public class MyCorpScreen extends AbstractScreen{
         font = generator.generateFont(parameter);
 
         layout = new GlyphLayout();
+
+        corpData = new CorpData();
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.87F, 0.63F, 0.4F, 1);
+        ScreenUtils.clear(0.08F, 0.08F, 0.05F, 1);
+
+        if (Keybindings.isKeyJustPressed("Exit menu")) {
+            super.data.setCurrentMenu((super.data.getCurrentMenu() != -1) ? -1 : 0);
+        }
 
         super.data.batch.begin();
 
-        font.draw(super.data.batch, "fish", Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() - 80,
-                0, Align.center, false);
+        font.draw(super.data.batch, String.format("%s - $%.2f", corpData.name, corpData.value), Gdx.graphics.getWidth() / 2F,
+                Gdx.graphics.getHeight() - 80, 0, Align.center, false);
 
         super.data.batch.end();
     }
