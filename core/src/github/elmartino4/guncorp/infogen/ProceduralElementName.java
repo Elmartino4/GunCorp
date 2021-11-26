@@ -54,8 +54,6 @@ public class ProceduralElementName {
 
         str += "ium";
 
-        System.out.println("str = " + str);
-
         return str;
     }
 }

@@ -17,7 +17,8 @@ public class Keybindings {
             kb.putString("Toggle debug", "F3");
             kb.putString("Exit menu", "Escape");
             kb.putString("Enable right click menu", "mousebutton_RIGHT");
-            kb.putString("Exit right click menu", "mousebutton_LEFT");
+            kb.putString("Enable left click menu", "mousebutton_LEFT");
+            kb.putString("Exit context menus", "mousebutton_LEFT");
             kb.putBoolean("Autoscrolling mouse", true);
         }
         kb.flush();

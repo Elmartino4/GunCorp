@@ -11,10 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import github.elmartino4.guncorp.config.ConfigChangeCallback;
 import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
-import github.elmartino4.guncorp.gui.menu.AbstractMenu;
-import github.elmartino4.guncorp.gui.menu.AreaMenu;
-import github.elmartino4.guncorp.gui.menu.EscapeMenu;
-import github.elmartino4.guncorp.gui.menu.MenuData;
+import github.elmartino4.guncorp.gui.menu.*;
 import github.elmartino4.guncorp.gui.screen.AbstractScreen;
 import github.elmartino4.guncorp.gui.screen.CorpopediaScreen;
 import github.elmartino4.guncorp.gui.screen.MapScreen;
@@ -26,7 +23,7 @@ public class GunCorpMain extends ApplicationAdapter {
     private int titleTimer = 0;
 
     public GunCorpMain(ConfigChangeCallback configChangeCallback) {
-        this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData) };
+        this.gameData.menus = new AbstractMenu[] { new EscapeMenu(gameData), new AreaMenu(gameData), new BuildingMenu(gameData)};
         this.gameData.screens = new AbstractScreen[] { new MapScreen(gameData), new CorpopediaScreen(gameData),
                 new MyCorpScreen(gameData) };
         UserConfig.configChangeCallback = configChangeCallback;

@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import github.elmartino4.guncorp.GameData;
 import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
+import github.elmartino4.guncorp.gui.menu.BuildingMenu;
 import github.elmartino4.guncorp.infogen.ProceduralElementName;
 import github.elmartino4.guncorp.map.ElementStatistics;
 import github.elmartino4.guncorp.map.MapData;
@@ -93,12 +94,13 @@ public class MapScreen extends AbstractScreen {
             setMenu(1);
         }
 
-        if (Keybindings.isKeyJustPressed("Exit right click menu") && super.data.getCurrentMenu() == 1) {
-            setMenu(-1);
-        }
-
         if (Keybindings.isKeyJustPressed("Exit menu")) {
             setMenu((super.data.getCurrentMenu() != -1) ? -1 : 0);
+        }
+
+        if (Keybindings.isKeyJustPressed("Exit context menus") && (super.data.getCurrentMenu() == 1 ||
+                super.data.getCurrentMenu() == 2 || super.data.getCurrentMenu() == -1)) {
+            setMenu((super.data.getCurrentMenu() != -1) ? -1 : 2);
         }
 
         pos[0] += velocity[0] * Gdx.graphics.getDeltaTime();
@@ -123,9 +125,9 @@ public class MapScreen extends AbstractScreen {
             for (int y = -1; y <= Gdx.graphics.getHeight() / GRID + 1; y++) {
                 Color color = mapData.getColor(x + (int) pos[0], y + (int) pos[1]).cpy();
 
-                if (super.data.getCurrentMenu() == -1 || super.data.getCurrentMenu() == 1)
+                if (super.data.getCurrentMenu() == -1 || super.data.getCurrentMenu() == 1 || super.data.getCurrentMenu() == 2)
                     if (x + (int) pos[0] == mousePos[0] && y + (int) pos[1] == mousePos[1])
-                        color.add(0.1F, 0.1F, 0.1F, 1);
+                        color.add(0.26F, 0.26F, 0.25F, 1);
 
                 super.data.shapeRenderer.rect((x - pos[0] % 1) * GRID, (y - pos[1] % 1) * GRID, GRID, GRID, color,
                         color, color, color);
@@ -167,6 +169,10 @@ public class MapScreen extends AbstractScreen {
                 data.add(new ContextMenuData.SimpleSubSection(
                         String.format("%s %.1f%%", entry.getKey().getName(nameGen), entry.getValue() * 100)));
             }
+        }
+
+        if (menu == 2) {
+            ((BuildingMenu) super.data.menus[menu]).mousePos = mouseToGrid();
         }
 
         if (menu != -1) {
