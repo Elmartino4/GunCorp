@@ -30,6 +30,7 @@ public class MapScreen extends AbstractScreen {
     private final float[] pos = new float[2];
     private final float[] velocity = new float[2];
     public final MapData mapData = new MapData(4269);
+    private int[] cachedMousePos = {0, 0};
 
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -108,11 +109,24 @@ public class MapScreen extends AbstractScreen {
 
         pos[1] = Math.max(Math.min(pos[1], MAP_SIZE - Gdx.graphics.getHeight() / (float) GRID), -MAP_SIZE);
 
+        int[] mousePos;
+
+        if (super.data.getCurrentMenu() == 1){
+            mousePos = cachedMousePos;
+        } else {
+            mousePos = mouseToGrid();
+        }
+
         super.data.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (int x = -1; x <= Gdx.graphics.getWidth() / GRID + 1; x++) {
             for (int y = -1; y <= Gdx.graphics.getHeight() / GRID + 1; y++) {
-                Color color = mapData.getColor(x + (int) pos[0], y + (int) pos[1]);
+                Color color = mapData.getColor(x + (int) pos[0], y + (int) pos[1]).cpy();
+
+                if (super.data.getCurrentMenu() == -1 || super.data.getCurrentMenu() == 1)
+                    if (x + (int) pos[0] == mousePos[0] && y + (int) pos[1] == mousePos[1])
+                        color.add(0.1F, 0.1F, 0.1F, 1);
+
                 super.data.shapeRenderer.rect((x - pos[0] % 1) * GRID, (y - pos[1] % 1) * GRID, GRID, GRID, color,
                         color, color, color);
             }
@@ -121,8 +135,6 @@ public class MapScreen extends AbstractScreen {
         super.data.shapeRenderer.end();
 
         super.data.batch.begin();
-
-        int[] mousePos = mouseToGrid();
 
         if (super.data.getCurrentMenu() == -1 && UserConfig.prefs.getBoolean("debug"))
             font.draw(super.data.batch,
@@ -142,6 +154,7 @@ public class MapScreen extends AbstractScreen {
         super.data.setCurrentMenu(menu);
 
         if (menu == 1) {
+            cachedMousePos = mouseToGrid();
             ContextMenuData data = ((AreaMenu) super.data.menus[menu]).contextMenuData;
 
             int[] gridPos = mouseToGrid();
