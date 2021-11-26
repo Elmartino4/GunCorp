@@ -1,6 +1,6 @@
 package github.elmartino4.guncorp.map;
 
-import github.elmartino4.guncorp.OpenSimplexNoise;
+import github.elmartino4.guncorp.infogen.OpenSimplexNoise;
 
 public class ElementStatistics {
     public static long SEED;

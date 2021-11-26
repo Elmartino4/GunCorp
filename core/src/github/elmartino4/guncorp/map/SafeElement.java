@@ -1,5 +1,7 @@
 package github.elmartino4.guncorp.map;
 
+import github.elmartino4.guncorp.infogen.ProceduralElementName;
+
 public class SafeElement {
     int N;
     int M;
@@ -16,5 +18,14 @@ public class SafeElement {
     @Override
     public String toString() {
         return "Element{" + N + "," + M + "}";
+    }
+
+    public String getName(ProceduralElementName nameGen) {
+        try {
+            return nameGen.getName(M, N).toUpperCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "fishy";
     }
 }

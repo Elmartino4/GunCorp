@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.Align;
 import github.elmartino4.guncorp.GameData;
 import github.elmartino4.guncorp.config.Keybindings;
 import github.elmartino4.guncorp.config.UserConfig;
+import github.elmartino4.guncorp.infogen.ProceduralElementName;
+import github.elmartino4.guncorp.map.ElementStatistics;
 import github.elmartino4.guncorp.map.MapData;
 import github.elmartino4.guncorp.map.SafeElement;
 import github.elmartino4.guncorp.gui.menu.AreaMenu;
@@ -34,6 +36,8 @@ public class MapScreen extends AbstractScreen {
     BitmapFont font;
     GlyphLayout layout;
 
+    ProceduralElementName nameGen;
+
     public MapScreen(GameData gameData) {
         super(gameData);
     }
@@ -50,6 +54,8 @@ public class MapScreen extends AbstractScreen {
 
         pos[0] = -Gdx.graphics.getWidth() / (float) GRID / 2F;
         pos[1] = -Gdx.graphics.getHeight() / (float) GRID / 2F;
+
+        nameGen = new ProceduralElementName(ElementStatistics.SEED);
     }
 
     @Override
@@ -146,7 +152,7 @@ public class MapScreen extends AbstractScreen {
 
             for (Map.Entry<SafeElement, Float> entry : mapData.getData(gridPos[0], gridPos[1]).entrySet()) {
                 data.add(new ContextMenuData.SimpleSubSection(
-                        String.format("%s %.1f%%", entry.getKey().toString(), entry.getValue() * 100)));
+                        String.format("%s %.1f%%", entry.getKey().getName(nameGen), entry.getValue() * 100)));
             }
         }
 

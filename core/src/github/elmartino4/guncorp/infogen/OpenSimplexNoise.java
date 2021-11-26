@@ -17,7 +17,7 @@
  * This is mostly kept here for reference. In particular, the 4D code is very slow.
  */
 
-package github.elmartino4.guncorp;
+package github.elmartino4.guncorp.infogen;
 
 public class OpenSimplexNoise {
 
